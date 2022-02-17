@@ -1,0 +1,4 @@
+.featured_modal {
+  box-shadow: 0 3px #e7e7e7, 0 -3px #fff, 3px 0 #fff, -3px 0 #fff, 0 -5px #b6a695, 0 5px #b6a695, 0 0 0 3px #b6a695, 5px 0 #b6a695, -5px 0 #b6a695, 9px 0 rgb(0 0 0 / 10%), 0 9px rgb(0 0 0 / 10%);
+  background: #fff;
+}

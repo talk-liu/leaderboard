@@ -1,0 +1,23 @@
+[
+  {
+    "name": "claim",
+    "path": "/claim",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/claim.vue",
+    "chunkName": "pages/claim",
+    "_name": "_27a5068f"
+  },
+  {
+    "name": "game",
+    "path": "/game",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/game.vue",
+    "chunkName": "pages/game",
+    "_name": "_03b2e86f"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_097c4c25"
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "Claims": {
+    "description": "Auto imported from components/Claims.vue"
+  },
+  "Games": {
+    "description": "Auto imported from components/Games.vue"
+  },
+  "Heads": {
+    "description": "Auto imported from components/Heads.vue"
+  },
+  "Leaderboard": {
+    "description": "Auto imported from components/Leaderboard.vue"
+  },
+  "Loading": {
+    "description": "Auto imported from components/Loading.vue"
+  },
+  "Switchs": {
+    "description": "Auto imported from components/Switchs.vue"
+  }
+}
