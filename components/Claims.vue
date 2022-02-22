@@ -2,6 +2,69 @@
 <template>
   <div class="claims">
     <div class="container">
+      <div class="information">
+        <p>
+          <label>User: iAmJason</label>
+          <img src="~/assets/icon/singup.png" />
+        </p>
+        <p>
+          G01x....4567
+          <img src="~/assets/icon/cup.png" />
+        </p>
+      </div>
+      <div class="assets">
+        <div>
+          <h3>
+            <img src="~/assets/icon/assets.png" />
+            Assets
+          </h3>
+          <img src="~/assets/send.png" />
+        </div>
+        <div class="currencys">
+          <div>
+            <p>
+              <img width="24px"
+                   src="~/assets/currency/eth.png" />
+              <label>
+                1.100 ETH
+              </label>
+            </p>
+            <p>
+              <img width="24px"
+                   src="~/assets/currency/eth.png" />
+              <label>
+                1.100 ETH
+              </label>
+            </p>
+          </div>
+          <div>
+            <p>
+              <img width="24px"
+                   src="~/assets/currency/eth.png" />
+              <label>
+                1.100 ETH
+              </label>
+            </p>
+            <p>
+              <img width="24px"
+                   src="~/assets/currency/eth.png" />
+              <label>
+                1.100 ETH
+              </label>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rewards">
+        <p class="border"></p>
+        <h3>
+          Claim Rewards
+          <img width="25px"
+               src="~/assets/icon/history.png" />
+        </h3>
+      </div>
+
       <ul>
         <li>
           <div v-show="boll"
@@ -68,7 +131,108 @@ export default {
 .claims {
   color: #fff;
   margin-top: 52px;
+  .information {
+    padding-top: 10px;
+    height: 96px;
+    background: radial-gradient(
+        38.87% 56.6% at 50% 115.1%,
+        rgba(99, 254, 180, 0.5) 0%,
+        rgba(6, 219, 100, 0) 100%
+      ),
+      radial-gradient(
+        91.33% 64.45% at 50% -14.45%,
+        rgba(99, 254, 180, 0.5) 0%,
+        rgba(6, 219, 100, 0) 71.97%
+      ),
+      #121621;
+    p {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0px;
+      font-style: italic;
+      text-shadow: 0px 3.56366px 4.98913px rgba(64, 221, 132, 0.3),
+        0px 0px 3.56366px #40dd84;
+      label {
+        font-size: 24px;
+      }
+
+      img {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+  .assets {
+    background: url('~/assets/assetsBack.png') no-repeat;
+    background-size: 100% 100%;
+    height: 120px;
+    width: 722px;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    padding: 26px 68px;
+    h3 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+    }
+    .currencys {
+      width: 100%;
+      div {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 20px 0px;
+        p {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          label {
+            font-size: 18px;
+          }
+          img {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+  .rewards {
+    width: 85%;
+    margin: auto;
+    h3 {
+      text-align: center;
+      overflow: hidden;
+      margin-top: 25px;
+      font-size: 24px;
+      font-style: italic;
+      text-shadow: 0px 3.56366px 4.98913px rgba(64, 221, 132, 0.3),
+        0px 0px 3.56366px #40dd84;
+
+      img {
+        float: right;
+      }
+    }
+    .border {
+      background: linear-gradient(
+        89.96deg,
+        rgba(64, 221, 132, 0) -1.12%,
+        #40dd84 32.05%,
+        #ffffff 46.79%,
+        #40dd84 59.43%,
+        rgba(64, 221, 132, 0) 99.97%
+      );
+      height: 4px;
+      margin-top: 20px;
+    }
+  }
   ul {
+    margin-top: 38px;
     display: grid;
     grid-gap: 20px;
     grid-template-columns: repeat(2, 1fr);

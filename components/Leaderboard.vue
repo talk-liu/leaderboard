@@ -2,6 +2,9 @@
 <template>
   <div class="leader">
     <div class="container">
+      <div class="logo">
+        <img src="~/assets/logo/2.png" />
+      </div>
       <div class="switch">
         <img @click="switchEve"
              src="~/assets/switch.png" />
@@ -10,54 +13,109 @@
       <div class="containerBox">
         <div class="left">
           <ul class="leftBox">
-            <li class="balance">
-              <img src="~/assets/logo1.png" />
-              <h3>
-                BALANCE
-                <p>
-                  100 PLAYTOKEN
-                </p>
-              </h3>
-            </li>
             <li class="round">
               <h4>
-                ROUND 1 RANKINGS
+                <label>ROUND 6 RANKINGS</label>
+                <img src="~/assets/ico.png" />
               </h4>
               <ul>
                 <li>
+                  <p class="title">
+                    <span class="name">PLAYER</span>
+                    <span>SCORE</span>
+                  </p>
                   <div>
                     <p v-for="(item,key) in attr"
                        :key="key">
-                      <img src="" />
                       <label class="name">{{item.name}}</label>
-                      <label>{{item.score}}</label>
+                      <!-- <label>{{item.score}}</label> -->
                       <label>{{item.reward}}</label>
-                      <!-- <a href="javascript:;">CLAIM</a> -->
                     </p>
                   </div>
                 </li>
               </ul>
             </li>
           </ul>
+          <ul class="leftBox"
+              id="rankings">
+            <li class="round">
+              <h4>
+                <label>RANKINGS HISTORY</label>
+                <img src="~/assets/ico1.png" />
+              </h4>
+              <ul>
+                <li class="history">
+                  <img src="~/assets/history-left.png" />
+                  <div>
+                    <p v-for="item in 5"
+                       :key="item">
+                      ROUND 5
+                    </p>
+                  </div>
+                  <img src="~/assets/history-right.png" />
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
         <div class="game">
-          <div style="width:500px;height:720px">
+          <div style="width:370px;height:675px;margin-left: 55px;margin-top: 15px;">
             <iframe v-if="boll"
                     width="100%"
                     height="100%"
                     src="https://playrank.io/towerdefense/"> </iframe>
             <div v-else
                  class="back">
-              <img @click="boll=!boll"
-                   src="~assets/button111.png" />
+              <p>
+                <img @click="boll=!boll"
+                     src="~assets/button111.png" />
+              </p>
+              <p>
+                <img @click="boll=!boll"
+                     src="~assets/gameButton1.png" />
+              </p>
+              <p>
+                <img @click="boll=!boll"
+                     src="~assets/gameButton2.png" />
+              </p>
+              <p>
+                <img @click="boll=!boll"
+                     src="~assets/gameButton3.png" />
+              </p>
             </div>
           </div>
         </div>
         <div class="right">
           <div>
-            <p>HOW TO PLAY</p>
-            <p style="width:220px">HOW RANKINGS WORK</p>
-            <p>FULL SCREEN</p>
+            <h2>
+              <img src="~/assets/ico3.png" />
+              <span>PLAY TOKEN Pool</span>
+              <img src="~/assets/ico4.png" />
+            </h2>
+            <ul>
+              <li>
+                <h3>
+                  Rd. 6 Prize Pool
+                </h3>
+                <p>
+                  1st 70.00 PLAY
+                </p>
+                <p>
+                  1st 70.00 PLAY
+                </p>
+                <p>
+                  1st 70.00 PLAY
+                </p>
+              </li>
+              <li class="round">
+                <h4>
+                  Next Round: 7
+                </h4>
+                <p>
+                  PLAYS LEFT: 10 / 20
+                </p>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -140,8 +198,14 @@ export default {
 <style scoped lang="less">
 .leader {
   .container {
-    background: #000;
     position: relative;
+    div.logo {
+      position: absolute;
+      left: 50%;
+      top: 92px;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+    }
     .switch {
       position: absolute;
       left: 50%;
@@ -160,109 +224,155 @@ export default {
     background-size: 100% 100%;
     height: 900px;
     .game {
-      margin: 0px 24px;
       .back {
-        background: url('~/assets/back66.png') no-repeat;
-        background-size: 100% 100%;
-        height: 100%;
-        width: 100%;
-        position: relative;
-        img {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          cursor: pointer;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        p {
+          margin: 8px 0px;
+          img {
+            cursor: pointer;
+          }
         }
       }
     }
     .left {
-      background: url('~/assets/left.png') no-repeat;
+      // background: url('~/assets/left.png') no-repeat;
       background-size: 100% 100%;
       width: 100%;
       height: 800px;
-      // margin-right: 40px;
-      margin: 0px 31px;
+      margin-top: -70px;
     }
     .right {
       width: 100%;
-      background: url('~/assets/right.png') no-repeat;
-      background-size: 100% 100%;
-      height: 800px;
       margin: 0px 32px;
-      position: relative;
       div {
-        position: absolute;
-        top: 50%;
-
-        left: 50%;
-
-        transform: translate(-50%, -50%);
-        p {
-          background: url('~/assets/button1.png') no-repeat;
-          background-size: 100% 100%;
-          width: 157px;
-          height: 41px;
-          text-align: center;
-          line-height: 41px;
-          margin: auto;
-          margin-top: 50px;
+        padding-left: 40px;
+        text-align: center;
+        h2 {
+          font-size: 24px;
+          text-shadow: 0px 5.00052px 7.00072px rgba(64, 221, 132, 0.3),
+            0px 0px 5.00052px #40dd84;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          span {
+            margin: 0px 6px;
+          }
+        }
+        ul {
+          margin-top: 118px;
+          h3 {
+            font-size: 24px;
+            text-shadow: 0px 5.00052px 7.00072px rgba(64, 221, 132, 0.3),
+              0px 0px 5.00052px #40dd84;
+          }
+          p {
+            color: #40dd84;
+            text-shadow: 0px 5.34643px 7.485px rgba(64, 221, 132, 0.3),
+              0px 0px 5.34643px #40dd84;
+            font-size: 18px;
+            margin-top: 10px;
+          }
+          .round {
+            margin-top: 66px;
+            h4 {
+              color: #ffffff;
+              font-size: 20px;
+              text-shadow: 0px 4.1659px 5.83226px rgba(64, 221, 132, 0.3),
+                0px 0px 4.1659px #40dd84;
+            }
+            p {
+              font-size: 12px;
+            }
+          }
         }
       }
     }
     .leftBox {
       padding: 0px 8px;
       padding-top: 66px;
-      .balance {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-shadow: 0px 3.56366px 4.98913px rgba(64, 221, 132, 0.3),
-          0px 0px 3.56366px #40dd84;
-        h3 {
-          font-size: 17px;
-          p {
-            font-size: 14px;
-            color: #27f17f;
-          }
-        }
-      }
       .round {
+        margin-left: 36px;
         h4 {
           background: url('~/assets/title.png') no-repeat;
           background-size: 100% 100%;
-          height: 46px;
-          line-height: 46px;
-          text-align: center;
+          height: 60px;
           font-size: 16px;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          padding-bottom: 8px;
         }
         ul {
-          padding: 0px 25px;
-          margin-top: -11px;
+          padding: 0px 20px;
+          margin-top: -16px;
           li {
             background: url('~/assets/title1.png') no-repeat;
             background-size: 100% 100%;
-            height: 200px;
+            height: 305px;
             font-size: 13px;
             padding: 8px;
             div {
-              height: 150px;
+              height: 170px;
               overflow: auto;
             }
             p {
-              margin: 10px 0px;
+              margin: 10px 5px;
             }
             a {
               color: #fff;
             }
             label {
-              margin-right: 15px;
-              width: 40px;
+              width: 62px;
               display: inline-block;
+              font-size: 16px;
+              text-align: right;
+            }
+            .title {
+              margin: 0px 5px;
+              padding-bottom: 4px;
+              font-size: 18px;
+              color: #a2a2a2;
             }
             .name {
-              width: 55px;
+              width: 120px;
+              display: inline-block;
+              margin-right: 15px;
+              text-align: left;
             }
+          }
+        }
+      }
+    }
+    #rankings {
+      padding-top: 17px;
+      .history {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        img {
+          margin-top: -70px;
+          cursor: pointer;
+        }
+        div {
+          height: auto;
+          overflow: hidden;
+          width: 100%;
+          margin-top: -70px;
+          p:first-child {
+            margin-top: 0px;
+          }
+          p {
+            background: url('~/assets/title.png') no-repeat;
+            background-size: 100% 100%;
+            height: 48px;
+            text-align: center;
+            line-height: 40px;
+            margin: 0px;
+            margin-top: -7px;
+            font-size: 17px;
           }
         }
       }

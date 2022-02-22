@@ -29,6 +29,16 @@ body,
 html {
   background: #15181d;
 }
+span.confirm {
+  background: url('~/assets/confirm.png') no-repeat;
+  background-size: 100% 100%;
+  display: block;
+  width: 125px;
+  height: 36px;
+  line-height: 36px;
+  margin: auto;
+  cursor: pointer;
+}
 .container {
   margin: auto;
 }

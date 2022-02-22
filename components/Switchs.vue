@@ -9,7 +9,7 @@
       </h4>
       <div>
         <p>
-          <nuxt-link to="/">
+          <nuxt-link to="/leaderboard">
             <img src="~assets/logo2.png" />
           </nuxt-link>
         </p>

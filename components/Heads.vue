@@ -5,33 +5,33 @@
       <nuxt-link to="/">
         <img src="~/assets/logo.png" />
       </nuxt-link>
-      <nuxt-link to="/">Assets</nuxt-link>
-      <nuxt-link to="/claim">Claim</nuxt-link>
-      <!-- <a>
-        Leaderboard
-      </a>
-      <a>
-        Game Lobby
-      </a>
-      <a>
-        Show QR Code
-      </a> -->
+      <nuxt-link to="/">Game Lobby</nuxt-link>
+      <nuxt-link to="/leaderboard">Leaderboard</nuxt-link>
+      <a @click="switchEve">Buy Crypto</a>
+      <nuxt-link to="/claim">FAQ</nuxt-link>
+      <!-- <nuxt-link to="/claim">Claim</nuxt-link> -->
       <img @click="signEve"
            src="~/assets/button.png"
            v-if="!access_token" />
-      <a v-else><span @click="accEve()">{{accounts[0]}} </span>{{accountName}}</a>
+      <a v-else>
+        <!-- <span @click="accEve()">{{accounts[0]}} </span> -->
+        {{accountName}}
+      </a>
     </div>
+    <Confirmation ref="childFunction" />
   </div>
 </template>
 
 <script>
 import Web3 from 'web3'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import { get, post } from '~/utils/axios.js'
 import URL from '~/utils/const/index.js'
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import Confirmation from '~/components/Popup/Confirmation.vue'
 
 export default {
-  name: 'NuxtTutorial',
+  name: 'HeadsPages',
+  components: { Confirmation },
   data() {
     return {
       accounts: [],
@@ -90,6 +90,9 @@ export default {
       console.log(666)
       window.top.postMessage('updateScore', '/')
     },
+    switchEve() {
+      this.$refs.childFunction.switchGameBollEve()
+    },
   },
 }
 </script>
@@ -111,6 +114,8 @@ export default {
       color: #a4a4a4;
       font-size: 16px;
       font-weight: 600;
+      font-style: italic;
+      cursor: pointer;
       span {
         color: #a4a4a4;
         position: absolute;
