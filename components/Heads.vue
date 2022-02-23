@@ -8,17 +8,21 @@
       <nuxt-link to="/">Game Lobby</nuxt-link>
       <nuxt-link to="/leaderboard">Leaderboard</nuxt-link>
       <a @click="switchEve">Buy Crypto</a>
-      <nuxt-link to="/claim">FAQ</nuxt-link>
-      <!-- <nuxt-link to="/claim">Claim</nuxt-link> -->
-      <img @click="signEve"
+      <!-- <nuxt-link to="/claim">FAQ</nuxt-link> -->
+      <img @click="singinEve"
            src="~/assets/button.png"
-           v-if="!access_token" />
-      <a v-else>
-        <!-- <span @click="accEve()">{{accounts[0]}} </span> -->
-        {{accountName}}
-      </a>
+           v-if="!userInfo.accountName" />
+      <!-- <a v-else>
+        <span @click="accEve()">{{accounts[0]}} </span>
+        {{userInfo.accountName}}
+      </a> -->
+      <nuxt-link v-else
+                 to="/user">{{userInfo.accountName}}</nuxt-link>
+
     </div>
     <Confirmation ref="childFunction" />
+    <Singin @walletEveMethod="signEve"
+            ref="singinFunction" />
   </div>
 </template>
 
@@ -28,20 +32,19 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import { get, post } from '~/utils/axios.js'
 import URL from '~/utils/const/index.js'
 import Confirmation from '~/components/Popup/Confirmation.vue'
+import Singin from '~/components/Popup/Singin.vue'
 
 export default {
   name: 'HeadsPages',
-  components: { Confirmation },
+  components: { Confirmation, Singin },
   data() {
     return {
       accounts: [],
-      access_token: '',
-      accountName: '',
     }
   },
   computed: {
     ...mapState({
-      access_tokens: (state) => state.todos.access_token,
+      userInfo: (state) => state.todos.userInfo,
     }),
   },
   async mounted() {
@@ -57,17 +60,16 @@ export default {
     const web3 = new Web3(window.ethereum)
     this.accounts = await web3.eth.getAccounts()
     this.accounts = await ethereum.enable()
-    this.access_token = localStorage.getItem('access_token')
-    if (!this.access_token) {
+    const access_token = localStorage.getItem('access_token')
+    if (!access_token) {
       this.signEve()
     } else {
       const { data } = await post(URL + 'crypto/leaderboard')
-      this.accountName = data.parameter.accountName
-      this.SET_TOKEN(this.access_token)
+      this.SET_USERINFO(data.parameter)
     }
   },
   methods: {
-    ...mapMutations('todos', ['SET_TOKEN']),
+    ...mapMutations('todos', ['SET_USERINFO']),
     async signEve() {
       const web3 = new Web3(window.ethereum)
       this.accounts = await web3.eth.getAccounts()
@@ -92,6 +94,9 @@ export default {
     },
     switchEve() {
       this.$refs.childFunction.switchGameBollEve()
+    },
+    singinEve() {
+      this.$refs.singinFunction.singinBollEve()
     },
   },
 }

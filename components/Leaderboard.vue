@@ -10,6 +10,10 @@
              src="~/assets/switch.png" />
       </div>
       <Switchs ref="childFunction" />
+      <Play @childPlayMethod="boll=!boll"
+            ref="playFunction" />
+      <Currency @tokensMethod="tokensMethod"
+                ref="currencyFunction" />
       <div class="containerBox">
         <div class="left">
           <ul class="leftBox">
@@ -67,7 +71,7 @@
             <div v-else
                  class="back">
               <p>
-                <img @click="boll=!boll"
+                <img @click="playEve"
                      src="~assets/button111.png" />
               </p>
               <p>
@@ -88,10 +92,14 @@
         <div class="right">
           <div>
             <h2>
-              <img src="~/assets/ico3.png" />
-              <span>PLAY TOKEN Pool</span>
+              <img width="30px"
+                   :src="poolData.img" />
+              <span @click="currencyEve">{{poolData.name}} TOKEN Pool</span>
               <img src="~/assets/ico4.png" />
             </h2>
+            <h5>
+              Balance：1500,000
+            </h5>
             <ul>
               <li>
                 <h3>
@@ -124,16 +132,21 @@
 </template>
 
 <script>
-import Switchs from './Switchs.vue'
+import Web3 from 'web3'
 import { get, post } from '~/utils/axios.js'
 import URL from '~/utils/const/index.js'
-import Web3 from 'web3'
+import Switchs from './Switchs.vue'
+import Play from '~/components/Popup/Play.vue'
+import Currency from '~/components/Popup/Currency.vue'
+import TOKENS from '~/utils/const/tokens.js'
+
 export default {
-  components: { Switchs },
+  components: { Switchs, Play, Currency },
   data() {
     return {
       attr: [],
       boll: false,
+      poolData: TOKENS[0],
     }
   },
   async mounted() {
@@ -153,8 +166,17 @@ export default {
     this.attrsEve()
   },
   methods: {
+    playEve() {
+      this.$refs.playFunction.playBollEve()
+    },
     switchEve() {
       this.$refs.childFunction.switchGameBollEve()
+    },
+    currencyEve() {
+      this.$refs.currencyFunction.switchCurrencyEve(this.poolData)
+    },
+    tokensMethod(item) {
+      this.poolData = item
     },
     compare(p) {
       return function (m, n) {
@@ -259,10 +281,18 @@ export default {
           align-items: center;
           span {
             margin: 0px 6px;
+            cursor: pointer;
           }
         }
+        h5 {
+          margin-top: 54px;
+          font-size: 18px;
+          text-shadow: 0px 5.00052px 7.00072px rgba(64, 221, 132, 0.3),
+            0px 0px 5.00052px #40dd84;
+          color: #fff;
+        }
         ul {
-          margin-top: 118px;
+          margin-top: 54px;
           h3 {
             font-size: 24px;
             text-shadow: 0px 5.00052px 7.00072px rgba(64, 221, 132, 0.3),

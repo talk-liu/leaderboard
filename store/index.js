@@ -1,8 +1,8 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import todos from "./todos";
+import Vue from 'vue'
+import Vuex from 'vuex'
+import todos from './todos'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 const store = () =>
   new Vuex.Store({
@@ -11,12 +11,12 @@ const store = () =>
     },
     mutations: {
       increment(state) {
-        state.counter++;
+        state.counter++
       },
     },
     modules: {
       todos,
     },
-  });
+  })
 
-export default store;
+export default store

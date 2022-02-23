@@ -4,18 +4,21 @@
     <div class="switchGameBox">
       <h4>
         Switch Tokens
-        <img @click="switchGameBollEve"
+        <img @click="switchCurrencyEve"
              src="~assets/close.png" />
       </h4>
       <div>
         <ul>
           <li v-for="(item,key) in tokens"
-              :key="key">
+              :key="key"
+              @click="tokensEve(item)">
             <p class="list">
               <img width="44px"
                    :src="item.img" />
               <span>
                 {{item.name}}
+                <img v-if="poolData.name===item.name"
+                     src="~/assets/icon/yes.png" />
               </span>
             </p>
             <p class="border"></p>
@@ -27,29 +30,23 @@
 </template>
 
 <script>
+import TOKENS from '~/utils/const/tokens.js'
 export default {
   data() {
     return {
       switchGameBoll: false,
-      tokens: [
-        {
-          img: require('~/assets/currency/rfuel.png'),
-          name: 'RFUEL',
-        },
-        {
-          img: require('~/assets/currency/eth.png'),
-          name: 'ETH',
-        },
-        {
-          img: require('~/assets/currency/usdt.png'),
-          name: 'USDT',
-        },
-      ],
+      tokens: TOKENS,
+      poolData: {},
     }
   },
   methods: {
-    switchGameBollEve() {
+    switchCurrencyEve(data) {
+      this.poolData = data
       this.switchGameBoll = !this.switchGameBoll
+    },
+    tokensEve(item) {
+      this.switchGameBoll = false
+      this.$emit('tokensMethod', item)
     },
   },
 }
@@ -75,7 +72,7 @@ export default {
     background: url('~/assets/propr.png') no-repeat;
     background-size: 100% 100%;
     width: 462px;
-    height: 390px;
+    padding-bottom: 30px;
     h4 {
       margin-top: 26px;
       padding: 0px 60px;
@@ -104,6 +101,12 @@ export default {
           text-align: left;
           text-shadow: 0px 5.1841px 7.25774px rgba(64, 221, 132, 0.3),
             0px 0px 5.1841px #40dd84;
+          position: relative;
+          img {
+            position: absolute;
+            top: 3px;
+            right: 0px;
+          }
         }
       }
       .border {

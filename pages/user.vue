@@ -1,12 +1,12 @@
 <template>
   <div>
     <Heads />
-    <Setuser />
+    <Claims />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage',
+  name: 'UserPage',
 }
 </script>

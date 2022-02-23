@@ -1,7 +1,7 @@
 <template>
   <div>
     <Heads />
-    <Claims />
+    <Setuser />
   </div>
 </template>
 

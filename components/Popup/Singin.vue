@@ -3,20 +3,20 @@
        v-if="switchGameBoll">
     <div class="switchGameBox">
       <h4>
-        Switch Game
-        <img @click="switchGameBollEve"
+        Connect Wallet
+        <img @click="singinBollEve"
              src="~assets/close.png" />
       </h4>
       <div>
         <p>
-          <nuxt-link to="/game">
-            <img src="~assets/logo2.png" />
-          </nuxt-link>
+          <img @click="walletEve"
+               width="100%"
+               src="~/assets/wallet-2.png" />
         </p>
         <p>
-          <nuxt-link to="/leaderboard">
-            <img width="150px"
-                 src="~assets/logo1.png" />
+          <nuxt-link to="/user">
+            <img width="100%"
+                 src="~/assets/wallet-1.png" />
           </nuxt-link>
         </p>
       </div>
@@ -32,8 +32,11 @@ export default {
     }
   },
   methods: {
-    switchGameBollEve() {
+    singinBollEve() {
       this.switchGameBoll = !this.switchGameBoll
+    },
+    walletEve() {
+      this.$emit('walletEveMethod')
     },
   },
 }
@@ -59,7 +62,7 @@ export default {
     background: url('~/assets/propr.png') no-repeat;
     background-size: 100% 100%;
     width: 462px;
-    height: 390px;
+    padding-bottom: 40px;
     h4 {
       margin-top: 26px;
       padding: 0px 60px;
@@ -71,10 +74,11 @@ export default {
       }
     }
     div {
-      text-align: center;
-      margin-top: 30px;
+      padding: 0px 50px;
+      padding-bottom: 60px;
       p {
-        margin: 40px 0px;
+        margin-top: 60px;
+        cursor: pointer;
       }
     }
   }

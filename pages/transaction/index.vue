@@ -3,15 +3,16 @@
     <Heads />
     <div class="transaction container">
       <h3>Transaction</h3>
-      <Switchs ref="childFunction" />
+      <Currency @tokensMethod="tokensMethod"
+                ref="currencyFunction" />
       <ul>
         <li>
           <label>Assets</label>
           <div class="assets">
             <div @click="switchEve">
               <p>
-                <img src="~/assets/currency/usdt.png" />
-                USDT
+                <img :src="assetsData.img" />
+                {{assetsData.name}}
               </p>
               <img src="~/assets/union-right.png" />
             </div>
@@ -43,14 +44,22 @@
 </template>
 
 <script>
-import Switchs from '~/components/Popup/Switchs.vue'
+import Currency from '~/components/Popup/Currency.vue'
+import TOKENS from '~/utils/const/tokens.js'
+
 export default {
   name: 'TransactionPage',
-  components: { Switchs },
+  data() {
+    return { assetsData: TOKENS[0] }
+  },
+  components: { Currency },
 
   methods: {
     switchEve() {
-      this.$refs.childFunction.switchGameBollEve()
+      this.$refs.currencyFunction.switchGameBollEve()
+    },
+    tokensMethod(item) {
+      this.assetsData = item
     },
   },
 }

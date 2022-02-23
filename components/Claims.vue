@@ -4,7 +4,7 @@
     <div class="container">
       <div class="information">
         <p>
-          <label>User: iAmJason</label>
+          <label>User: {{userInfo.accountName}}</label>
           <img src="~/assets/icon/singup.png" />
         </p>
         <p>
@@ -18,7 +18,9 @@
             <img src="~/assets/icon/assets.png" />
             Assets
           </h3>
-          <img src="~/assets/send.png" />
+          <nuxt-link to="/transaction">
+            <img src="~/assets/send.png" />
+          </nuxt-link>
         </div>
         <div class="currencys">
           <div>
@@ -69,13 +71,28 @@
         <li>
           <div v-show="boll"
                class="popup"></div>
-          <img src="~/assets/claims/logo.png" />
+          <img src="~/assets/logo/2.png" />
           <div>
             <h3>Game Tokens</h3>
             <p>
               Claim Rewards<span>{{score}}</span>
             </p>
-            <a @click="claimsEve"
+            <a @click="claimsEve(1)"
+               href="javascript:;">
+              <img src="~/assets/claims/button.png" />
+            </a>
+          </div>
+        </li>
+        <li>
+          <div v-show="boll"
+               class="popup"></div>
+          <img src="~/assets/logo/1.png" />
+          <div>
+            <h3>Game Tokens</h3>
+            <p>
+              Claim Rewards<span>{{score}}</span>
+            </p>
+            <a @click="claimsEve(2)"
                href="javascript:;">
               <img src="~/assets/claims/button.png" />
             </a>
@@ -90,9 +107,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import Web3 from 'web3'
 import { get, post } from '~/utils/axios.js'
 import URL from '~/utils/const/index.js'
-import Web3 from 'web3'
 export default {
   data() {
     return {
@@ -100,13 +118,18 @@ export default {
       boll: false,
     }
   },
+  computed: {
+    ...mapState({
+      userInfo: (state) => state.todos.userInfo,
+    }),
+  },
   async mounted() {
     this.loadEve()
   },
   methods: {
-    async claimsEve() {
+    async claimsEve(game_id) {
       this.boll = true
-      const { message } = await post(URL + 'crypto/claim')
+      const { message } = await post(URL + 'crypto/claim', { game_id: game_id })
       this.boll = false
       this.loadEve()
       alert(message)

@@ -6,6 +6,8 @@
         <img src="~/assets/logo/1.png" />
       </div>
       <Switchs ref="childFunction" />
+      <Currency @tokensMethod="tokensMethod"
+                ref="currencyFunction" />
       <div class="iframeBox">
         <p class="switch">
           <img @click="switchEve"
@@ -45,10 +47,14 @@
         <div class="left">
           <div>
             <h2>
-              <img src="~/assets/ico3.png" />
-              <span>PLAY TOKEN Pool</span>
+              <img width="30px"
+                   :src="poolData.img" />
+              <span @click="currencyEve">{{poolData.name}} TOKEN Pool</span>
               <img src="~/assets/ico4.png" />
             </h2>
+            <h5>
+              Balance：1500,000
+            </h5>
             <ul>
               <li>
                 <h3>
@@ -142,11 +148,16 @@
 import { get, post } from '~/utils/axios.js'
 import URL from '~/utils/const/index.js'
 import Web3 from 'web3'
+import Switchs from './Switchs.vue'
+import Currency from '~/components/Popup/Currency.vue'
+import TOKENS from '~/utils/const/tokens.js'
 export default {
+  components: { Switchs, Currency },
   data() {
     return {
       attr: [],
       boll: false,
+      poolData: TOKENS[0],
     }
   },
   created() {},
@@ -169,6 +180,12 @@ export default {
   methods: {
     switchEve() {
       this.$refs.childFunction.switchGameBollEve()
+    },
+    currencyEve() {
+      this.$refs.currencyFunction.switchCurrencyEve(this.poolData)
+    },
+    tokensMethod(item) {
+      this.poolData = item
     },
     compare(p) {
       return function (m, n) {
@@ -369,10 +386,18 @@ export default {
           align-items: center;
           span {
             margin: 0px 6px;
+            cursor: pointer;
           }
         }
+        h5 {
+          margin-top: 43px;
+          font-size: 18px;
+          text-shadow: 0px 5.00052px 7.00072px rgba(64, 221, 132, 0.3),
+            0px 0px 5.00052px #40dd84;
+          color: #fff;
+        }
         ul {
-          margin-top: 118px;
+          margin-top: 43px;
           h3 {
             font-size: 24px;
             text-shadow: 0px 5.00052px 7.00072px rgba(64, 221, 132, 0.3),
@@ -386,7 +411,7 @@ export default {
             margin-top: 10px;
           }
           .round {
-            margin-top: 66px;
+            margin-top: 43px;
             h3 {
             }
             h4 {

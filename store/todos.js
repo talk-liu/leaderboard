@@ -1,20 +1,20 @@
 const state = {
-  access_token: "",
-};
+  userInfo: '',
+}
 const mutations = {
-  SET_TOKEN(state, value) {
-    state.access_token = value;
+  SET_USERINFO(state, value) {
+    state.userInfo = value
   },
-};
+}
 const actions = {
   async getInfo({ state, commit }, val) {
-    commit("SET_TOKEN", val);
+    commit('SET_USERINFO', val)
   },
-};
-
+}
+console.log(1)
 export default {
   namespaced: true,
   state,
   actions,
   mutations,
-};
+}
