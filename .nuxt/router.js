@@ -4,8 +4,13 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _27a5068f = () => interopDefault(import('../pages/claim.vue' /* webpackChunkName: "pages/claim" */))
-const _03b2e86f = () => interopDefault(import('../pages/game.vue' /* webpackChunkName: "pages/game" */))
+const _eb448922 = () => interopDefault(import('../pages/flappybirds.vue' /* webpackChunkName: "pages/flappybirds" */))
+const _44594bf7 = () => interopDefault(import('../pages/modify.vue' /* webpackChunkName: "pages/modify" */))
+const _7e577b8f = () => interopDefault(import('../pages/towerdefenses.vue' /* webpackChunkName: "pages/towerdefenses" */))
+const _3acda5b4 = () => interopDefault(import('../pages/transaction/index.vue' /* webpackChunkName: "pages/transaction/index" */))
+const _10ec844b = () => interopDefault(import('../pages/user/index.vue' /* webpackChunkName: "pages/user/index" */))
+const _7c51f414 = () => interopDefault(import('../pages/transaction/history.vue' /* webpackChunkName: "pages/transaction/history" */))
+const _e88eca66 = () => interopDefault(import('../pages/user/history.vue' /* webpackChunkName: "pages/user/history" */))
 const _097c4c25 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -20,13 +25,33 @@ export const routerOptions = {
   scrollBehavior,
 
   routes: [{
-    path: "/claim",
-    component: _27a5068f,
-    name: "claim"
+    path: "/flappybirds",
+    component: _eb448922,
+    name: "flappybirds"
   }, {
-    path: "/game",
-    component: _03b2e86f,
-    name: "game"
+    path: "/modify",
+    component: _44594bf7,
+    name: "modify"
+  }, {
+    path: "/towerdefenses",
+    component: _7e577b8f,
+    name: "towerdefenses"
+  }, {
+    path: "/transaction",
+    component: _3acda5b4,
+    name: "transaction"
+  }, {
+    path: "/user",
+    component: _10ec844b,
+    name: "user"
+  }, {
+    path: "/transaction/history",
+    component: _7c51f414,
+    name: "transaction-history"
+  }, {
+    path: "/user/history",
+    component: _e88eca66,
+    name: "user-history"
   }, {
     path: "/",
     component: _097c4c25,

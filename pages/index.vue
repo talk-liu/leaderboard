@@ -8,31 +8,42 @@
           <img class="logo"
                src="~/assets/logo/2.png" />
           <h3>MINION DEFENSE</h3>
-          <p>
-            Different hordes of minions are attacking the castle!
-          </p>
-          <p>
-            Join the foray and prevent these vermins from approaching the castle gates, protect the royal treasure at all cost.
-          </p>
-          <nuxt-link to="/leaderboard">
+          <div>
+            <p>
+              Different hordes of minions are attacking the castle!
+            </p>
+            <p>
+              Join the foray and prevent these vermins from approaching the castle gates, protect the royal treasure at all cost.
+            </p>
+          </div>
+          <!-- <nuxt-link to="/towerdefenses">
             <img class="buttonPlay"
                  src="~/assets/buttonPlay.png" />
-          </nuxt-link>
+          </nuxt-link> -->
+          <img @click="loginIs('towerdefenses')"
+               class="buttonPlay"
+               src="~/assets/buttonPlay.png" />
         </li>
         <li>
           <img class="logo"
                src="~/assets/logo/1.png" />
-          <h3>MINION DEFENSE</h3>
-          <p>
-            Different hordes of minions are attacking the castle!
-          </p>
-          <p>
+          <h3>FLAPPYBIRD</h3>
+          <div>
+            <p>
+              Flappy Bird is an arcade-style game in which the player controls the bird Faby, which moves persistently to the right. The player is tasked with navigating Faby through pairs of pipes
+              that
+              have equally sized gaps placed at random heights. </p>
+            <!-- <p>
             Join the foray and prevent these vermins from approaching the castle gates, protect the royal treasure at all cost.
-          </p>
-          <nuxt-link to="/game">
+          </p> -->
+          </div>
+          <!-- <nuxt-link to="/flappybirds">
             <img class="buttonPlay"
                  src="~/assets/buttonPlay.png" />
-          </nuxt-link>
+          </nuxt-link> -->
+          <img @click="loginIs('flappybirds')"
+               class="buttonPlay"
+               src="~/assets/buttonPlay.png" />
         </li>
       </ul>
     </div>
@@ -40,8 +51,23 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   name: 'IndexPage',
+  computed: {
+    ...mapState({
+      userInfo: (state) => state.tokens,
+    }),
+  },
+  methods: {
+    loginIs(url) {
+      if (this.userInfo.assets.accountName) {
+        this.$router.push({ name: url })
+      } else {
+        this.$message.info('Please login first')
+      }
+    },
+  },
 }
 </script>
 <style scoped lang="less">
@@ -63,6 +89,9 @@ export default {
         font-size: 24px;
         margin-bottom: 10px;
         margin-top: -20px;
+      }
+      div {
+        height: 100px;
       }
       p {
         font-size: 16px;

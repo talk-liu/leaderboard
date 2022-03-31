@@ -8,7 +8,8 @@
       <h3>
         Transaction History
       </h3>
-      <table border="1">
+      <table border="1"
+             v-if="loading">
         <thead>
           <tr>
             <th>From</th>
@@ -19,29 +20,60 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>0x26x...</td>
-            <td>0x26x...</td>
-            <td>+500 RFUEL</td>
-            <td>2022-2-16 14:25:16</td>
-            <td>Approved</td>
-          </tr>
-          <tr>
-            <td>0x26x2222222...</td>
-            <td>0x26x...</td>
-            <td>+500 RFUEL</td>
-            <td>2022-2-16 14:25:16</td>
-            <td>Approved</td>
+          <tr v-for="(item,key) in datas"
+              :key="key" v-if="item" v-show="item.fromAddress && item.toAddress">
+            <td>{{item.fromAddress}}</td>
+            <td>{{item.toAddress}}</td>
+            <td class="tips"
+                :class="{'fromAccount':item.boll}">{{item.boll?'-':'+'}}{{item.amount}} {{item.assetSymbol}}</td>
+            <td>{{ item.blockTime | moment("YYYY-MM-DD HH:mm:ss") }}</td>
+            <td><a :href="'https://scan.gaiaopen.com/tx/'+item.txHash">see</a></td>
           </tr>
         </tbody>
       </table>
+      <p v-else
+         style="text-align: center;margin: 20px 0px;">
+        <a-spin />
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import { get, post } from '~/utils/axios.js'
+import { mapState, mapMutations } from 'vuex'
+import URL from '~/utils/const/index.js'
 export default {
   name: 'IndexPage',
+  data() {
+    return {
+      datas: [],
+      loading: false,
+    }
+  },
+  computed: {
+    ...mapState({
+      userInfo: (state) => state.tokens.assets,
+    }),
+  },
+  async mounted() {
+    const { datas } = await post(URL + 'nexus/history')
+    console.log(this.userInfo.accountName)
+    for (let i in datas) {
+      if(datas[i].assetSymbol == 'gas'){
+        delete datas[i]
+      }else{
+        if (this.userInfo.accountName == datas[i].fromAccount) {
+          datas[i]['boll'] = true
+        } else {
+          datas[i]['boll'] = false
+        }
+      }
+    }
+    console.log(JSON.stringify(datas))
+    this.datas = datas
+    this.loading = true
+  },
 }
 </script>
 <style scoped lang="less">
@@ -74,6 +106,7 @@ export default {
       margin-bottom: 44px;
       th {
         font-size: 18px;
+        text-align: center;
       }
     }
     tbody {
@@ -82,6 +115,12 @@ export default {
       }
       td {
         text-align: center;
+      }
+      .tips {
+        color: #40dd84;
+      }
+      .fromAccount {
+        color: red;
       }
     }
   }

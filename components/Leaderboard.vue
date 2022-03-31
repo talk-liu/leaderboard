@@ -11,7 +11,8 @@
       </div>
       <Switchs ref="childFunction" />
       <Play @childPlayMethod="boll=!boll"
-            ref="playFunction" />
+            ref="playFunction"
+            :poolData="poolData" />
       <Currency @tokensMethod="tokensMethod"
                 ref="currencyFunction" />
       <div class="containerBox">
@@ -19,7 +20,9 @@
           <ul class="leftBox">
             <li class="round">
               <h4>
-                <label>ROUND 6 RANKINGS</label>
+                <label>ROUND
+                  <span v-if="leaderboards[rankingsNum]">{{leaderboards[rankingsNum].round}}</span>
+                  RANKINGS</label>
                 <img src="~/assets/ico.png" />
               </h4>
               <ul>
@@ -28,12 +31,11 @@
                     <span class="name">PLAYER</span>
                     <span>SCORE</span>
                   </p>
-                  <div>
-                    <p v-for="(item,key) in attr"
+                  <div v-if="leaderboards[rankingsNum]">
+                    <p v-for="(items,key) in leaderboards[rankingsNum].list"
                        :key="key">
-                      <label class="name">{{item.name}}</label>
-                      <!-- <label>{{item.score}}</label> -->
-                      <label>{{item.reward}}</label>
+                      <label class="name">{{items.name}}</label>
+                      <label>{{items.score}}</label>
                     </p>
                   </div>
                 </li>
@@ -48,15 +50,23 @@
                 <img src="~/assets/ico1.png" />
               </h4>
               <ul>
-                <li class="history">
-                  <img src="~/assets/history-left.png" />
+                <li v-if="loading"
+                    class="history">
+                  <!-- <img src="~/assets/history-left.png" /> -->
                   <div>
-                    <p v-for="item in 5"
-                       :key="item">
-                      ROUND 5
+                    <p v-for="(item,key) in leaderboards"
+                       :key="item.round"
+                       @click="leaderboardsEve(key)">
+                      ROUND {{item.round}}
                     </p>
                   </div>
-                  <img src="~/assets/history-right.png" />
+                  <!-- <img src="~/assets/history-right.png" /> -->
+                </li>
+                <li class="loading"
+                    v-else>
+                  <p style="text-align: center;margin: 20px 0px;">
+                    <a-spin />
+                  </p>
                 </li>
               </ul>
             </li>
@@ -90,37 +100,43 @@
           </div>
         </div>
         <div class="right">
-          <div>
-            <h2>
+          <div v-if="poolData">
+            <h2 @click="currencyEve">
               <img width="30px"
                    :src="poolData.img" />
-              <span @click="currencyEve">{{poolData.name}} TOKEN Pool</span>
+              <span>{{poolData.name}} Pool</span>
               <img src="~/assets/ico4.png" />
             </h2>
             <h5>
-              Balance：1500,000
+              Balance：{{poolData.balance}}
             </h5>
             <ul>
               <li>
-                <h3>
+                <!-- <h3>
                   Rd. 6 Prize Pool
-                </h3>
+                </h3> -->
                 <p>
-                  1st 70.00 PLAY
+                  1st 100.00 {{poolData.name}}
                 </p>
                 <p>
-                  1st 70.00 PLAY
+                  2nd 99.00 {{poolData.name}}
                 </p>
                 <p>
-                  1st 70.00 PLAY
+                  3rd 98.00 {{poolData.name}}
                 </p>
+                <!-- <p>
+                  4th 97.00 {{poolData.name}}
+                </p>
+                <p>
+                  5th 96.00 {{poolData.name}}
+                </p> -->
               </li>
               <li class="round">
                 <h4>
-                  Next Round: 7
+                  Next Round: <span v-if="leaderboards[0]">{{leaderboards[0].round | round}}</span>
                 </h4>
-                <p>
-                  PLAYS LEFT: 10 / 20
+                <p class="time">
+                  TIME LEFT: {{mm}}:{{ss}} MINUTES
                 </p>
               </li>
             </ul>
@@ -132,6 +148,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import Web3 from 'web3'
 import { get, post } from '~/utils/axios.js'
 import URL from '~/utils/const/index.js'
@@ -145,27 +162,84 @@ export default {
   data() {
     return {
       attr: [],
+      leaderboards: [],
       boll: false,
-      poolData: TOKENS[0],
+      rankingsNum: 0,
+      loading: false,
+      mm: 0,
+      ss: 0,
     }
+  },
+  filters: {
+    round(value) {
+      if (value) {
+        let num = parseInt(value.substring(value.length - 2, value.length))
+        let str = value.substring(0, value.length - 2)
+        num += 1
+        return str + num
+      }
+      return value
+    },
+  },
+  computed: {
+    poolData() {
+      return this.$store.state.tokens.tokens
+    },
+  },
+  watch: {
+    poolData(val) {
+      if (val) {
+        this.attrsEve(val.assetId)
+      }
+    },
   },
   async mounted() {
     const _this = this
+
+    this.mm = this.$moment().format('mm')
+    this.ss = this.$moment().format('ss')
+    this.mm = 60 - this.mm
+
+    setInterval(() => {
+      _this.ss -= 1
+      if (_this.ss <= 0) {
+        _this.ss = 60
+        _this.mm -= 1
+      }
+      if (_this.mm < 0) {
+        _this.ss = 0
+        _this.mm = 60
+        _this.attrsEve(_this.poolData.assetId)
+        _this.INIT_ASSETS()
+      }
+    }, 1000)
+
     window.addEventListener(
       'message',
       function (event) {
         console.log('666这里是接收到的消息，消息内容在event.data属性中', event)
         console.log(event.data, 1111)
-        if (event.data == 'updateScore') {
-          _this.attrsEve()
+        // if (event.data == 'updateScore') {
+        //   _this.attrsEve(_this.poolData.assetId)
+        //   _this.INIT_ASSETS()
+        // }
+        switch (event.data) {
+          case 'updateScore':
+            _this.attrsEve(_this.poolData.assetId)
+            _this.INIT_ASSETS()
+            break
+          case 'jumpToLeaderBoard':
+            window.scrollTo(10000, 10000)
+            break
         }
       },
       false
     )
     localStorage.setItem('gameid', 1)
-    this.attrsEve()
+    // this.attrsEve()
   },
   methods: {
+    ...mapMutations('tokens', ['INIT_ASSETS']),
     playEve() {
       this.$refs.playFunction.playBollEve()
     },
@@ -185,33 +259,18 @@ export default {
         return b - a //升序
       }
     },
-    async attrsEve() {
-      const web3 = new Web3(
-        Web3.givenProvider ||
-          new Web3.providers.HttpProvider('http://localhost:7545')
-      )
-      console.log(localStorage.getItem('access_token'))
+    leaderboardsEve(key) {
+      this.rankingsNum = key
+    },
+    async attrsEve(assetId) {
       if (localStorage.getItem('access_token')) {
-        const { data } = await post(URL + 'crypto/leaderboard')
-        console.log(data)
-        let decodeData = web3.eth.abi.decodeParameter(
-          'tuple(uint256,string,address,uint256)[]',
-          data.result
-        )
-        const attrs = []
-        decodeData.forEach((element) => {
-          console.log(element)
-          attrs.push({
-            score: element[0],
-            name: element[1],
-            address: element[2],
-            reward: element[3],
-          })
+        // this.loading = false
+        const { leaderboards } = await post(URL + 'nexus/leaderboard', {
+          asset_id: assetId,
         })
-        attrs.sort(this.compare('score'))
-        console.log(attrs)
-        this.attr = attrs
-        console.log(decodeData, 'talk', attrs)
+        console.log(444444, leaderboards)
+        this.loading = true
+        this.leaderboards = leaderboards
       }
     },
   },
@@ -285,7 +344,7 @@ export default {
           }
         }
         h5 {
-          margin-top: 54px;
+          margin-top: 14px;
           font-size: 18px;
           text-shadow: 0px 5.00052px 7.00072px rgba(64, 221, 132, 0.3),
             0px 0px 5.00052px #40dd84;
@@ -377,11 +436,12 @@ export default {
       }
     }
     #rankings {
-      padding-top: 17px;
+      padding-top: 0px;
       .history {
         display: flex;
         justify-content: space-around;
         align-items: center;
+        padding: 8px 32px;
         img {
           margin-top: -70px;
           cursor: pointer;
@@ -397,13 +457,20 @@ export default {
           p {
             background: url('~/assets/title.png') no-repeat;
             background-size: 100% 100%;
-            height: 48px;
+            height: 44px;
             text-align: center;
             line-height: 40px;
             margin: 0px;
             margin-top: -7px;
             font-size: 17px;
+            cursor: pointer;
           }
+        }
+      }
+
+      .loading {
+        div {
+          overflow: hidden;
         }
       }
     }

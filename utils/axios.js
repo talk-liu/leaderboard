@@ -1,9 +1,10 @@
 //1、引入axios
 import axios from 'axios'
+import { Router } from 'vue-router';
 //2、创建axios的实例
 let httpService = axios.create({
   baseUrl: process.env.NODE_ENV === 'development' ? '/devApi' : '/proApi', // TODO:具体的配置可以根据项目情况而来
-  timeout: 35000,
+  timeout: 60000,
 })
 //5、get请求的封装
 export function get(url, params = {}, headers = {}) {
@@ -42,8 +43,6 @@ export function post(
       .then((res) => {
         if (res.data.code == 1001) {
           localStorage.removeItem('access_token')
-          alert(res.data.message)
-          location.reload()
         }
         resolve(res.data)
       })

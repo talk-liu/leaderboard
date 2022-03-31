@@ -4,12 +4,13 @@
     <div class="container">
       <div class="information">
         <p>
-          <label>User: {{userInfo.accountName}}</label>
-          <img src="~/assets/icon/singup.png" />
+          <label>User: {{userInfo.accountName | accountName}}</label>
+          <img @click="singupEve"
+               src="~/assets/icon/singup.png" />
         </p>
         <p>
-          G01x....4567
-          <img src="~/assets/icon/cup.png" />
+          {{address}}
+          <img @click="copy" src="~/assets/icon/cup.png" />
         </p>
       </div>
       <div class="assets">
@@ -24,34 +25,13 @@
         </div>
         <div class="currencys">
           <div>
-            <p>
+            <p v-for="(item,key) in balances"
+               :key="key"
+               v-show="item.name">
               <img width="24px"
-                   src="~/assets/currency/eth.png" />
+                   :src="item.img" />
               <label>
-                1.100 ETH
-              </label>
-            </p>
-            <p>
-              <img width="24px"
-                   src="~/assets/currency/eth.png" />
-              <label>
-                1.100 ETH
-              </label>
-            </p>
-          </div>
-          <div>
-            <p>
-              <img width="24px"
-                   src="~/assets/currency/eth.png" />
-              <label>
-                1.100 ETH
-              </label>
-            </p>
-            <p>
-              <img width="24px"
-                   src="~/assets/currency/eth.png" />
-              <label>
-                1.100 ETH
+                {{item.balance}} {{item.name}}
               </label>
             </p>
           </div>
@@ -61,92 +41,153 @@
       <div class="rewards">
         <p class="border"></p>
         <h3>
-          Claim Rewards
-          <img width="25px"
-               src="~/assets/icon/history.png" />
+          <label>Claim Rewards</label>
+          <!-- <img width="25px"
+               src="~/assets/icon/history.png" /> -->
+
+          <nuxt-link to="/user/history">
+            <img src="~/assets/icon/history.png" />
+            History
+          </nuxt-link>
+          <a @click="switchEve">
+            <img src="~/assets/icon/filter.png" />
+            Filter
+          </a>
         </h3>
       </div>
+      <div v-if="loading">
+        <ul v-for="(item,key) in gameList"
+            :key="key">
+          <li v-for="(res,keys) in item.rewards"
+              :key="keys"
+              v-show="res.reward > 0 ">
+            <div v-show="boll"
+                 class="popup"></div>
+            <img v-show="item.game_id == 1"
+                 src="~/assets/logo/2.png" />
+            <img v-show="item.game_id == 2"
+                 src="~/assets/logo/1.png" />
+            <div>
+              <h3>Game Tokens</h3>
+              <p>
+                Claim Rewards<span>{{res.reward}} {{tokens.name}}</span>
+              </p>
+              <a @click="claimsEve(item.game_id,res.round)"
+                 href="javascript:;">
+                <img src="~/assets/claims/button.png" />
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <p v-else
+         style="text-align: center;margin: 20px 0px;color: #999">
+        <a-spin />
+        <br />
+        Getting data on the chain ...
+      </p>
 
-      <ul>
-        <li>
-          <div v-show="boll"
-               class="popup"></div>
-          <img src="~/assets/logo/2.png" />
-          <div>
-            <h3>Game Tokens</h3>
-            <p>
-              Claim Rewards<span>{{score}}</span>
-            </p>
-            <a @click="claimsEve(1)"
-               href="javascript:;">
-              <img src="~/assets/claims/button.png" />
-            </a>
-          </div>
-        </li>
-        <li>
-          <div v-show="boll"
-               class="popup"></div>
-          <img src="~/assets/logo/1.png" />
-          <div>
-            <h3>Game Tokens</h3>
-            <p>
-              Claim Rewards<span>{{score}}</span>
-            </p>
-            <a @click="claimsEve(2)"
-               href="javascript:;">
-              <img src="~/assets/claims/button.png" />
-            </a>
-          </div>
-        </li>
-      </ul>
+      <!-- <a-spin /> -->
+
       <!-- <p style="text-align: center;">
         No data
       </p> -->
     </div>
+    <Currency ref="currencyFunction" />
+    <Notification @tokensMethod="tokensMethod"
+                  ref="notificationFn" />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import Web3 from 'web3'
 import { get, post } from '~/utils/axios.js'
 import URL from '~/utils/const/index.js'
+import Currency from '~/components/Popup/Currency.vue'
+import Notification from '~/components/Popup/Notification.vue'
+// import TOKENS from '~/utils/const/tokens.js'
 export default {
   data() {
     return {
-      score: 0,
       boll: false,
+      assetsData: {},
+      gameList: [],
+      loading: false,
+      address: '',
     }
   },
+  filters: {
+    accountName(value) {
+      return value ? value.substring(0, value.length - 4) : value
+    },
+  },
+  components: { Currency, Notification },
   computed: {
     ...mapState({
-      userInfo: (state) => state.todos.userInfo,
+      userInfo: (state) => state.tokens.assets,
+      balances: (state) => state.tokens.assets.balances,
+      tokens: (state) => state.tokens.tokens,
     }),
   },
+  watch: {
+    tokens(val) {
+      this.rewardEve({ asset_id: val.assetId })
+    },
+  },
   async mounted() {
-    this.loadEve()
+    this.address = localStorage.getItem('address')
   },
   methods: {
-    async claimsEve(game_id) {
+    ...mapMutations('todos', ['SET_USERINFO']),
+    ...mapMutations('tokens', [
+      'SET_TOKENS',
+      'INIT_ASSETS_REMOVE',
+      'INIT_ASSETS',
+    ]),
+    async claimsEve(game_id, round) {
       this.boll = true
-      const { message } = await post(URL + 'crypto/claim', { game_id: game_id })
+      const { message } = await post(URL + 'nexus/claim', {
+        game_id: game_id,
+        asset_id: this.tokens.assetId,
+        round: parseInt(round),
+      })
       this.boll = false
-      this.loadEve()
-      alert(message)
+      this.$message.info('success')
+      this.INIT_ASSETS()
     },
-    async loadEve() {
-      const web3 = new Web3(
-        Web3.givenProvider ||
-          new Web3.providers.HttpProvider('http://localhost:7545')
-      )
-      const { data } = await post(URL + 'crypto/reward')
-      if (data.result == '0x') {
-        return false
-      }
-      let decodeData = web3.eth.abi.decodeParameter('uint256', data.result)
-      console.log(decodeData, '领取奖励')
-      this.score = decodeData
+    singupEve() {
+      this.$refs.notificationFn.switchCurrencyEve(this.tokens)
     },
+    tokensMethod(item) {
+      localStorage.removeItem('access_token')
+      this.INIT_ASSETS_REMOVE({})
+      const _this = this
+      setTimeout(() => {
+        _this.$router.push({ path: '/' })
+      }, 500)
+    },
+    switchEve() {
+      this.$refs.currencyFunction.switchCurrencyEve(this.tokens)
+    },
+    async rewardEve(params) {
+      this.loading = false
+      const { data } = await post(URL + 'nexus/reward', params)
+      this.gameList = data
+      this.loading = true
+    },
+    copy(){
+      var domUrl = document.createElement("input");
+      domUrl.value = this.address;
+      domUrl.id = "creatDom";
+      document.body.appendChild(domUrl);
+      domUrl.select(); // 选择对象
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      let creatDom = document.getElementById("creatDom");
+      creatDom.parentNode.removeChild(creatDom);
+      this.$message.info('Copy successful')
+
+    }
   },
 }
 </script>
@@ -190,14 +231,13 @@ export default {
   .assets {
     background: url('~/assets/assetsBack.png') no-repeat;
     background-size: 100% 100%;
-    height: 120px;
     width: 722px;
     margin: auto;
     margin-top: 20px;
     display: flex;
     justify-content: flex-start;
-    align-items: baseline;
-    padding: 26px 68px;
+    align-items: center;
+    padding: 20px 40px;
     h3 {
       display: flex;
       justify-content: center;
@@ -206,15 +246,21 @@ export default {
     }
     .currencys {
       width: 100%;
+      margin-left: 109px;
       div {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
+        // display: flex;
+        // justify-content: space-evenly;
+        // align-items: center;
         margin: 20px 0px;
+        overflow: hidden;
+        height: 100px;
         p {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
+          width: 180px;
+          float: left;
+          margin-bottom: 40px;
           label {
             font-size: 18px;
           }
@@ -226,19 +272,33 @@ export default {
     }
   }
   .rewards {
-    width: 85%;
     margin: auto;
     h3 {
       text-align: center;
-      overflow: hidden;
       margin-top: 25px;
-      font-size: 24px;
-      font-style: italic;
-      text-shadow: 0px 3.56366px 4.98913px rgba(64, 221, 132, 0.3),
-        0px 0px 3.56366px #40dd84;
-
-      img {
+      label {
+        font-size: 24px;
+        font-style: italic;
+        text-shadow: 0px 3.56366px 4.98913px rgba(64, 221, 132, 0.3),
+          0px 0px 3.56366px #40dd84;
+        margin-left: 224px;
+      }
+      a {
         float: right;
+        color: #40dd84;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        border: 1px solid #40dd84;
+        border-radius: 8px;
+        margin-left: 20px;
+        padding: 3px 10px;
+        height: 25px;
+        cursor: pointer;
+        img {
+          margin-right: 5px;
+        }
       }
     }
     .border {
@@ -251,6 +311,8 @@ export default {
         rgba(64, 221, 132, 0) 99.97%
       );
       height: 4px;
+      width: 85%;
+      margin: auto;
       margin-top: 20px;
     }
   }
@@ -265,7 +327,6 @@ export default {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      display: flex;
       padding: 30px 0px;
       position: relative;
       .popup {

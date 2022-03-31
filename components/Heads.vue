@@ -5,19 +5,19 @@
       <nuxt-link to="/">
         <img src="~/assets/logo.png" />
       </nuxt-link>
-      <nuxt-link to="/">Game Lobby</nuxt-link>
-      <nuxt-link to="/leaderboard">Leaderboard</nuxt-link>
-      <a @click="switchEve">Buy Crypto</a>
-      <!-- <nuxt-link to="/claim">FAQ</nuxt-link> -->
-      <img @click="singinEve"
-           src="~/assets/button.png"
-           v-if="!userInfo.accountName" />
-      <!-- <a v-else>
-        <span @click="accEve()">{{accounts[0]}} </span>
-        {{userInfo.accountName}}
-      </a> -->
-      <nuxt-link v-else
-                 to="/user">{{userInfo.accountName}}</nuxt-link>
+      <p class="route"
+         v-if="userInfo.assets.accountName">
+        <nuxt-link to="/">Game Lobby</nuxt-link>
+        <!-- <nuxt-link to="/towerdefenses">Leaderboard</nuxt-link> -->
+        <a @click="switchEve">Buy Crypto</a>
+      </p>
+      <p class="login">
+        <img @click="singinEve"
+             src="~/assets/button.png"
+             v-if="!access_token" />
+        <nuxt-link v-else
+                   to="/user">{{userInfo.assets.accountName | accountName}}</nuxt-link>
+      </p>
 
     </div>
     <Confirmation ref="childFunction" />
@@ -40,36 +40,26 @@ export default {
   data() {
     return {
       accounts: [],
+      access_token: '',
     }
+  },
+  filters: {
+    accountName(value) {
+      return value ? value.substring(0, value.length - 4) : value
+    },
   },
   computed: {
     ...mapState({
-      userInfo: (state) => state.todos.userInfo,
+      userInfo: (state) => state.tokens,
     }),
   },
   async mounted() {
-    // window.addEventListener(
-    //   'message',
-    //   function (event) {
-    //     console.log('这里是接收到的消息，消息内容在event.data属性中', event)
-    //     console.log(event.data)
-    //   },
-    //   false
-    // )
-
-    const web3 = new Web3(window.ethereum)
-    this.accounts = await web3.eth.getAccounts()
-    this.accounts = await ethereum.enable()
     const access_token = localStorage.getItem('access_token')
-    if (!access_token) {
-      this.signEve()
-    } else {
-      const { data } = await post(URL + 'crypto/leaderboard')
-      this.SET_USERINFO(data.parameter)
-    }
+    this.access_token = access_token
+    this.INIT_ASSETS()
   },
   methods: {
-    ...mapMutations('todos', ['SET_USERINFO']),
+    ...mapMutations('tokens', ['INIT_ASSETS']),
     async signEve() {
       const web3 = new Web3(window.ethereum)
       this.accounts = await web3.eth.getAccounts()
@@ -84,8 +74,12 @@ export default {
       }
       console.log(JSON.stringify(data))
 
-      const { access_token } = await post(URL + 'crypto/oauth/metamask', data)
+      const { access_token, address } = await post(
+        URL + 'nexus/oauth/metamask',
+        data
+      )
       localStorage.setItem('access_token', access_token)
+      localStorage.setItem('address', address)
       location.reload()
     },
     accEve() {
@@ -109,9 +103,16 @@ export default {
   position: relative;
   .container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     padding-top: 10px;
+    .route {
+      a {
+        margin: 0px 50px;
+      }
+    }
+    .login {
+    }
     img {
       cursor: pointer;
     }

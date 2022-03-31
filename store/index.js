@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import todos from './todos'
+import tokens from './tokens'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ const store = () =>
     },
     modules: {
       todos,
+      tokens,
     },
   })
 

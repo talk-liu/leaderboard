@@ -1,17 +1,52 @@
 [
   {
-    "name": "claim",
-    "path": "/claim",
-    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/claim.vue",
-    "chunkName": "pages/claim",
-    "_name": "_27a5068f"
+    "name": "flappybirds",
+    "path": "/flappybirds",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/flappybirds.vue",
+    "chunkName": "pages/flappybirds",
+    "_name": "_eb448922"
   },
   {
-    "name": "game",
-    "path": "/game",
-    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/game.vue",
-    "chunkName": "pages/game",
-    "_name": "_03b2e86f"
+    "name": "modify",
+    "path": "/modify",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/modify.vue",
+    "chunkName": "pages/modify",
+    "_name": "_44594bf7"
+  },
+  {
+    "name": "towerdefenses",
+    "path": "/towerdefenses",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/towerdefenses.vue",
+    "chunkName": "pages/towerdefenses",
+    "_name": "_7e577b8f"
+  },
+  {
+    "name": "transaction",
+    "path": "/transaction",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/transaction/index.vue",
+    "chunkName": "pages/transaction/index",
+    "_name": "_3acda5b4"
+  },
+  {
+    "name": "user",
+    "path": "/user",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/user/index.vue",
+    "chunkName": "pages/user/index",
+    "_name": "_10ec844b"
+  },
+  {
+    "name": "transaction-history",
+    "path": "/transaction/history",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/transaction/history.vue",
+    "chunkName": "pages/transaction/history",
+    "_name": "_7c51f414"
+  },
+  {
+    "name": "user-history",
+    "path": "/user/history",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/user/history.vue",
+    "chunkName": "pages/user/history",
+    "_name": "_e88eca66"
   },
   {
     "name": "index",

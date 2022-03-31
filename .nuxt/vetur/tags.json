@@ -14,7 +14,28 @@
   "Loading": {
     "description": "Auto imported from components/Loading.vue"
   },
+  "Setuser": {
+    "description": "Auto imported from components/Setuser.vue"
+  },
   "Switchs": {
     "description": "Auto imported from components/Switchs.vue"
+  },
+  "PopupConfirmation": {
+    "description": "Auto imported from components/Popup/Confirmation.vue"
+  },
+  "PopupCurrency": {
+    "description": "Auto imported from components/Popup/Currency.vue"
+  },
+  "PopupNotification": {
+    "description": "Auto imported from components/Popup/Notification.vue"
+  },
+  "PopupPlay": {
+    "description": "Auto imported from components/Popup/Play.vue"
+  },
+  "PopupSingin": {
+    "description": "Auto imported from components/Popup/Singin.vue"
+  },
+  "PopupTransaction": {
+    "description": "Auto imported from components/Popup/Transaction.vue"
   }
 }

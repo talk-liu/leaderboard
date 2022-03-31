@@ -13,12 +13,12 @@
                width="100%"
                src="~/assets/wallet-2.png" />
         </p>
-        <p>
+        <!-- <p>
           <nuxt-link to="/user">
             <img width="100%"
                  src="~/assets/wallet-1.png" />
           </nuxt-link>
-        </p>
+        </p> -->
       </div>
     </div>
   </div>

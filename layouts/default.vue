@@ -18,6 +18,26 @@ export default {
   margin: 0px;
   padding: 0px;
 }
+*,
+*::before,
+*::after {
+  box-sizing: unset;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #fff;
+  margin: 0px;
+  padding: 0px;
+}
+p {
+  margin: 0px;
+  padding: 0px;
+  line-height: unset;
+}
 a {
   text-decoration: none;
 }
@@ -25,9 +45,14 @@ ul,
 li {
   list-style: none;
 }
+@font-face {
+  font-family: 'Inter';
+  src: url('../static/Roboto-Regular.ttf');
+}
 body,
 html {
   background: #15181d;
+  font-family: 'Inter';
 }
 span.confirm {
   background: url('~/assets/confirm.png') no-repeat;

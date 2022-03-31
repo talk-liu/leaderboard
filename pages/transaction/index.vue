@@ -5,14 +5,16 @@
       <h3>Transaction</h3>
       <Currency @tokensMethod="tokensMethod"
                 ref="currencyFunction" />
+      <Transaction @transferEve="transferEve"
+                   ref="transactionFunction" />
       <ul>
         <li>
           <label>Assets</label>
           <div class="assets">
             <div @click="switchEve">
               <p>
-                <img :src="assetsData.img" />
-                {{assetsData.name}}
+                <img :src="tokens.img" />
+                {{tokens.name}}
               </p>
               <img src="~/assets/union-right.png" />
             </div>
@@ -21,18 +23,19 @@
         <li>
           <label>Send to</label>
           <div class="send">
-            <input />
+            <input v-model="to_account" />
           </div>
         </li>
         <li class="bor"></li>
         <li>
           <label>Amount</label>
           <div class="send">
-            <input />
+            <input v-model="amount" />
           </div>
         </li>
         <li class="history">
-          <span class="confirm">CONFIRM</span>
+          <span class="confirm"
+                @click="confirmEve">CONFIRM</span>
           <p>
             You can view your
             <nuxt-link to="/transaction/history">history</nuxt-link>
@@ -44,22 +47,55 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+import { get, post } from '~/utils/axios.js'
+import URL from '~/utils/const/index.js'
 import Currency from '~/components/Popup/Currency.vue'
-import TOKENS from '~/utils/const/tokens.js'
+import Transaction from '~/components/Popup/Transaction.vue'
 
 export default {
   name: 'TransactionPage',
   data() {
-    return { assetsData: TOKENS[0] }
+    return { to_account: '', amount: '' }
   },
-  components: { Currency },
-
+  computed: {
+    ...mapState({
+      tokens: (state) => state.tokens.tokens,
+    }),
+  },
+  components: { Currency, Transaction },
   methods: {
     switchEve() {
-      this.$refs.currencyFunction.switchGameBollEve()
+      this.$refs.currencyFunction.switchCurrencyEve(this.tokens)
+    },
+    async transferEve() {
+      const res = await post(URL + 'nexus/transfer', {
+        to_account: this.to_account,
+        asset_id: this.tokens.assetId,
+        amount: parseInt(this.amount),
+        remark: '测试',
+      })
+      if (res.data.data == null) {
+        this.$message.info(res.data.errorMsg)
+      } else {
+        this.$message.info(res.message)
+      }
+    },
+    async confirmEve() {
+      console.log(this.to_account, this.amount)
+      if (this.to_account && this.amount) {
+        const data = {
+          amount: this.amount,
+          to_account: this.to_account,
+          tokens: this.tokens.name,
+        }
+        this.$refs.transactionFunction.switchTransactionEve(data)
+      } else {
+        this.$message.info('Please fill in address and amount.')
+      }
     },
     tokensMethod(item) {
-      this.assetsData = item
+      this.tokens = item
     },
   },
 }
@@ -93,7 +129,7 @@ export default {
         color: #fff;
         font-size: 20px;
         margin-top: 42px;
-        padding: 3px 15px;
+        padding: 0px 15px;
       }
       p {
         text-align: center;

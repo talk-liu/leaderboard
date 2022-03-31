@@ -9,12 +9,12 @@
       </h4>
       <div>
         <p>
-          <nuxt-link to="/game">
+          <nuxt-link to="/flappybirds">
             <img src="~assets/logo2.png" />
           </nuxt-link>
         </p>
         <p>
-          <nuxt-link to="/leaderboard">
+          <nuxt-link to="/towerdefenses">
             <img width="150px"
                  src="~assets/logo1.png" />
           </nuxt-link>
@@ -61,8 +61,7 @@ export default {
     width: 462px;
     height: 390px;
     h4 {
-      margin-top: 26px;
-      padding: 0px 60px;
+      padding: 24px 60px;
       font-size: 20px;
       img {
         float: right;

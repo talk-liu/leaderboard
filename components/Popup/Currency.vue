@@ -9,9 +9,10 @@
       </h4>
       <div>
         <ul>
-          <li v-for="(item,key) in tokens"
+          <li v-for="(item,key) in balances"
               :key="key"
-              @click="tokensEve(item)">
+              @click="tokensEve(item)"
+              v-show="item.name">
             <p class="list">
               <img width="44px"
                    :src="item.img" />
@@ -30,23 +31,55 @@
 </template>
 
 <script>
-import TOKENS from '~/utils/const/tokens.js'
+import { mapState, mapMutations } from 'vuex'
+import { post } from '~/utils/axios.js'
+import URL from '~/utils/const/index.js'
 export default {
   data() {
     return {
       switchGameBoll: false,
-      tokens: TOKENS,
       poolData: {},
     }
   },
+  computed: {
+    ...mapState({
+      balances: (state) => state.tokens.assets.balances,
+    }),
+  },
+  async mounted() {
+    // const { data } = await post(URL + 'nexus/assets')
+    // const res = data.data.balances
+    // for (let i in res) {
+    //   switch (res[i].assetId) {
+    //     case 31:
+    //       res[i]['name'] = 'play'
+    //       res[i]['img'] = require('~/assets/currency/play.png')
+    //       break
+    //     case 32:
+    //       res[i]['name'] = 'rfuel'
+    //       res[i]['img'] = require('~/assets/currency/rfuel.png')
+    //       break
+    //     case 33:
+    //       res[i]['name'] = 'usdt'
+    //       res[i]['img'] = require('~/assets/currency/usdt.png')
+    //       break
+    //   }
+    // }
+    // localStorage.setItem('assetId', res[1].assetId)
+    // this.$emit('tokensMethod', res[1])
+    // this.SET_TOKENS(res)
+  },
   methods: {
+    ...mapMutations('tokens', ['SET_TOKENS', 'INIT_ASSETS', 'INIT_TOKENS']),
     switchCurrencyEve(data) {
       this.poolData = data
       this.switchGameBoll = !this.switchGameBoll
     },
     tokensEve(item) {
       this.switchGameBoll = false
+      localStorage.setItem('assetId', item.assetId)
       this.$emit('tokensMethod', item)
+      this.INIT_TOKENS(item)
     },
   },
 }

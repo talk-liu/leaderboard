@@ -4,12 +4,12 @@
     <div class="playBox">
       <div>
         <h3>
-          <span>1 PLAY TOKEN</span> IS REQUIRED
+          <span>10 PLAY TOKEN</span> IS REQUIRED
           TO PLAY THIS GAME.
         </h3>
         <h3>
           Balance:
-          <span>100.000 PLAY</span>
+          <span>{{poolData.balance}} {{poolData.name}}</span>
         </h3>
         <p>
           <img @click="switchGameBoll=!switchGameBoll"
@@ -29,11 +29,16 @@ export default {
       switchGameBoll: false,
     }
   },
+  props: ['poolData'],
   methods: {
     playBollEve() {
       this.switchGameBoll = !this.switchGameBoll
     },
     childPlayEve() {
+      if (this.poolData.balance < 10) {
+        this.$message.info('Not enough balance')
+        return
+      }
       this.switchGameBoll = !this.switchGameBoll
       this.$emit('childPlayMethod')
     },
