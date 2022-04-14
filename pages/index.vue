@@ -4,7 +4,7 @@
     <Heads />
     <div class="lobby container">
       <ul>
-        <li>
+        <li class="lobbyBack1">
           <img class="logo"
                src="~/assets/logo/2.png" />
           <h3>MINION DEFENSE</h3>
@@ -26,6 +26,7 @@
         </li>
         <li>
           <img class="logo"
+               style="width: 300px;margin: 40px 0px;"
                src="~/assets/logo/1.png" />
           <h3>FLAPPYBIRD</h3>
           <div>
@@ -61,7 +62,8 @@ export default {
   },
   methods: {
     loginIs(url) {
-      if (this.userInfo.assets.accountName) {
+      const access_token = localStorage.getItem('access_token')
+      if (access_token) {
         this.$router.push({ name: url })
       } else {
         this.$message.info('Please login first')
@@ -104,6 +106,9 @@ export default {
         width: 150px;
         margin-top: 30px;
       }
+    }
+    .lobbyBack1 {
+      background: url('~/assets/lobbyBack1.png') no-repeat;
     }
   }
 }

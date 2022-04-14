@@ -59,23 +59,21 @@
             </h5>
             <ul>
               <li>
-                <!-- <h3>
-                  Rd. 6 Prize Pool
-                </h3> -->
-                <p>
-                  1st 100.00 {{poolData.name}}
-                </p>
-                <p>
-                  2nd 99.00 {{poolData.name}}
-                </p>
-                <p>
-                  3rd 98.00 {{poolData.name}}
+                <h3 v-if="leaderboards[0]">
+                  Rd. {{leaderboards[0].round}} Prize Pool
+                </h3>
+                <p v-for="(item,key) in current"
+                   :key="key">
+                  {{key | keys}} {{item.getReward}} {{poolData.name}}
                 </p>
                 <!-- <p>
-                  4th 97.00 {{poolData.name}}
+                  1st {{current[0]}} {{poolData.name}}
                 </p>
                 <p>
-                  5th 96.00 {{poolData.name}}
+                  2nd {{current[1]}} {{poolData.name}}
+                </p>
+                <p>
+                  3rd {{current[2]}} {{poolData.name}}
                 </p> -->
               </li>
               <li class="round">
@@ -174,6 +172,7 @@ export default {
     return {
       attr: [],
       leaderboards: [],
+      current: [],
       rankingsNum: 0,
       boll: false,
       loading: false,
@@ -184,12 +183,21 @@ export default {
   filters: {
     round(value) {
       if (value) {
-        let num = parseInt(value.substring(value.length - 2, value.length))
-        let str = value.substring(0, value.length - 2)
+        let num = parseInt(value)
         num += 1
-        return str + num
+        return num
       }
       return value
+    },
+    keys(value) {
+      switch (value) {
+        case 0:
+          return '1st'
+        case 1:
+          return '2nd'
+        case 2:
+          return '3rd'
+      }
     },
   },
   computed: {
@@ -198,9 +206,25 @@ export default {
     },
   },
   watch: {
-    poolData(val) {
+    async poolData(val) {
       if (val) {
         this.attrsEve(val.assetId)
+        let _this = this
+        setInterval(async () => {
+          const { leaderboard } = await post(
+            URL + 'nexus/leaderboard/current',
+            {
+              game_id: 2,
+              asset_id: val.assetId,
+            }
+          )
+          if (leaderboard) {
+            const { list } = leaderboard
+            if (list.length) {
+              _this.current = list
+            }
+          }
+        }, 30000)
       }
     },
   },
@@ -250,6 +274,11 @@ export default {
   methods: {
     ...mapMutations('tokens', ['INIT_ASSETS']),
     playEve() {
+      const gas = localStorage.getItem('gas')
+      if (gas <= 0) {
+        this.$message.info('Gas is not enough')
+        return false
+      }
       this.$refs.playFunction.playBollEve()
     },
     switchEve() {
@@ -271,6 +300,15 @@ export default {
         const { leaderboards } = await post(URL + 'nexus/leaderboard', {
           asset_id: assetId,
         })
+        if (leaderboards) {
+          for (let i in leaderboards) {
+            let value = leaderboards[i].round
+            leaderboards[i].round = value.substring(
+              value.length - 2,
+              value.length
+            )
+          }
+        }
         console.log(444444, leaderboards)
         this.leaderboards = leaderboards
         this.loading = true

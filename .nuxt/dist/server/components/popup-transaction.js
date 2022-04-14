@@ -36,8 +36,8 @@ __webpack_require__.r(__webpack_exports__);
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(4);
-var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__(22);
-var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(44);
+var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__(23);
+var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(45);
 var ___CSS_LOADER_EXPORT___ = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 // Module
@@ -56,7 +56,7 @@ module.exports = ___CSS_LOADER_EXPORT___;
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/Popup/Transaction.vue?vue&type=template&id=dbf7027e&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.switchGameBoll)?_c('div',{staticClass:"switchGame"},[_vm._ssrNode("<div class=\"switchGameBox\" data-v-dbf7027e><h4 data-v-dbf7027e>\n      Notification\n    </h4> <div data-v-dbf7027e><p data-v-dbf7027e><span data-v-dbf7027e>"+_vm._ssrEscape("\n          "+_vm._s(_vm.poolData.amount)+" "+_vm._s(_vm.poolData.tokens)+"\n        ")+"</span>\n        will be sent to\n        <br data-v-dbf7027e> <a data-v-dbf7027e>"+_vm._ssrEscape("\n          "+_vm._s(_vm._f("to_account")(_vm.poolData.to_account))+"...\n        ")+"</a></p> <p class=\"config\" data-v-dbf7027e><img"+(_vm._ssrAttr("src",__webpack_require__(87)))+" data-v-dbf7027e> <img"+(_vm._ssrAttr("src",__webpack_require__(88)))+" data-v-dbf7027e></p></div></div>")]):_vm._e()}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.switchGameBoll)?_c('div',{staticClass:"switchGame"},[_vm._ssrNode("<div class=\"switchGameBox\" data-v-dbf7027e><h4 data-v-dbf7027e>\n      Notification\n    </h4> <div data-v-dbf7027e><p data-v-dbf7027e><span data-v-dbf7027e>"+_vm._ssrEscape("\n          "+_vm._s(_vm.poolData.amount)+" "+_vm._s(_vm.poolData.tokens)+"\n        ")+"</span>\n        will be sent to\n        <br data-v-dbf7027e> <a data-v-dbf7027e>"+_vm._ssrEscape("\n          "+_vm._s(_vm._f("to_account")(_vm.poolData.to_account))+"...\n        ")+"</a></p> <p class=\"config\" data-v-dbf7027e><img"+(_vm._ssrAttr("src",__webpack_require__(89)))+" data-v-dbf7027e> <img"+(_vm._ssrAttr("src",__webpack_require__(90)))+" data-v-dbf7027e></p></div></div>")]):_vm._e()}
 var staticRenderFns = []
 
 
@@ -165,21 +165,21 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
-/***/ 44:
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "img/propr.2113bd4.png";
 
 /***/ }),
 
-/***/ 87:
+/***/ 89:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "img/cancel.0d2154c.png";
 
 /***/ }),
 
-/***/ 88:
+/***/ 90:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "img/config.3e57bf4.png";

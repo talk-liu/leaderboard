@@ -16,7 +16,8 @@
              src="~/assets/button.png"
              v-if="!access_token" />
         <nuxt-link v-else
-                   to="/user">{{userInfo.assets.accountName | accountName}}</nuxt-link>
+                   to="/user"><img width="30px"
+               src="~/assets/user.svg" />{{userInfo.assets.accountName | accountName}}</nuxt-link>
       </p>
 
     </div>
@@ -112,6 +113,9 @@ export default {
       }
     }
     .login {
+      a {
+        color: #40dd84;
+      }
     }
     img {
       cursor: pointer;

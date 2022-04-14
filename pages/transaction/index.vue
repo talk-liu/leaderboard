@@ -16,7 +16,10 @@
                 <img :src="tokens.img" />
                 {{tokens.name}}
               </p>
-              <img src="~/assets/union-right.png" />
+              <span>
+                Balance: {{tokens.balance}}
+                <img src="~/assets/union-right.png" />
+              </span>
             </div>
           </div>
         </li>
@@ -72,12 +75,13 @@ export default {
       const res = await post(URL + 'nexus/transfer', {
         to_account: this.to_account,
         asset_id: this.tokens.assetId,
-        amount: parseInt(this.amount),
+        amount: parseFloat(this.amount),
         remark: '测试',
       })
       if (res.data.data == null) {
         this.$message.info(res.data.errorMsg)
       } else {
+        console.log(res.data, 'transaction_id')
         this.$message.info(res.message)
       }
     },
@@ -169,6 +173,12 @@ export default {
           img {
             margin-right: 10px;
             width: 35px;
+          }
+        }
+        span {
+          color: #fff;
+          img {
+            margin-left: 10px;
           }
         }
       }

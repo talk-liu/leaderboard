@@ -21,13 +21,15 @@
         </thead>
         <tbody>
           <tr v-for="(item,key) in datas"
-              :key="key" v-if="item" v-show="item.fromAddress && item.toAddress">
+              :key="key"
+              v-if="item"
+              v-show="item.fromAddress && item.toAddress">
             <td>{{item.fromAddress}}</td>
             <td>{{item.toAddress}}</td>
             <td class="tips"
                 :class="{'fromAccount':item.boll}">{{item.boll?'-':'+'}}{{item.amount}} {{item.assetSymbol}}</td>
             <td>{{ item.blockTime | moment("YYYY-MM-DD HH:mm:ss") }}</td>
-            <td><a :href="'https://scan.gaiaopen.com/tx/'+item.txHash">see</a></td>
+            <td><a :href="'https://scan.gaiaopen.com/tx/'+item.txHash">View</a></td>
           </tr>
         </tbody>
       </table>
@@ -60,9 +62,9 @@ export default {
     const { datas } = await post(URL + 'nexus/history')
     console.log(this.userInfo.accountName)
     for (let i in datas) {
-      if(datas[i].assetSymbol == 'gas'){
+      if (datas[i].assetSymbol == 'gas') {
         delete datas[i]
-      }else{
+      } else {
         if (this.userInfo.accountName == datas[i].fromAccount) {
           datas[i]['boll'] = true
         } else {
@@ -71,6 +73,7 @@ export default {
       }
     }
     console.log(JSON.stringify(datas))
+    // datas.reverse()
     this.datas = datas
     this.loading = true
   },

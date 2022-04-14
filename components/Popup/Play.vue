@@ -4,7 +4,7 @@
     <div class="playBox">
       <div>
         <h3>
-          <span>10 PLAY TOKEN</span> IS REQUIRED
+          <span>10 {{poolData.name}} TOKEN</span> IS REQUIRED
           TO PLAY THIS GAME.
         </h3>
         <h3>

@@ -10,7 +10,8 @@
       <div>
         <p>
           <nuxt-link to="/flappybirds">
-            <img src="~assets/logo2.png" />
+            <img width="270px"
+                 src="~assets/logo2.png" />
           </nuxt-link>
         </p>
         <p>

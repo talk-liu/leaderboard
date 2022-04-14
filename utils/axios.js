@@ -1,6 +1,7 @@
 //1、引入axios
 import axios from 'axios'
-import { Router } from 'vue-router';
+import { Router } from 'vue-router'
+import { Button, message } from 'ant-design-vue'
 //2、创建axios的实例
 let httpService = axios.create({
   baseUrl: process.env.NODE_ENV === 'development' ? '/devApi' : '/proApi', // TODO:具体的配置可以根据项目情况而来
@@ -43,6 +44,9 @@ export function post(
       .then((res) => {
         if (res.data.code == 1001) {
           localStorage.removeItem('access_token')
+        }
+        if (res.data.code) {
+          message.warning(res.data.message)
         }
         resolve(res.data)
       })

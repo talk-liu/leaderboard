@@ -39,6 +39,9 @@ const mutations = {
     const res = data ? data.balances : []
     for (let i in res) {
       switch (res[i].assetId) {
+        case 0:
+          localStorage.setItem('gas', res[i].balance)
+          break
         case 31:
           res[i]['name'] = 'PLAY'
           res[i]['img'] = require('~/assets/currency/play.png')
