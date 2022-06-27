@@ -29,6 +29,9 @@
   "PopupNotification": {
     "description": "Auto imported from components/Popup/Notification.vue"
   },
+  "PopupPassword": {
+    "description": "Auto imported from components/Popup/Password.vue"
+  },
   "PopupPlay": {
     "description": "Auto imported from components/Popup/Play.vue"
   },

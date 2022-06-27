@@ -31,10 +31,11 @@ const mutations = {
     state.tokens = value
   },
   async INIT_ASSETS(state, value) {
-    const { data, result } = await post(URL + 'nexus/assets')
+    const { data, result, password } = await post(URL + 'nexus/assets')
     if (!result) {
       return false
     }
+    data.data['password'] = !password
     // data.data.balances = data.balances
     const res = data ? data.balances : []
     for (let i in res) {

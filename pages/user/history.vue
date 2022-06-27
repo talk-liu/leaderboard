@@ -23,7 +23,10 @@
               :key="key">
             <td>{{item.asset_id | capitalize}}</td>
             <td>{{item.round}}</td>
-            <td>+{{item.amount}}</td>
+            <td>
+              <img width="23px" :src="item.url"/>
+              +{{item.amount}}
+            </td>
             <td>{{item.create_time}}</td>
           </tr>
         </tbody>
@@ -61,10 +64,28 @@ export default {
   },
   async mounted() {
     const { data } = await post(URL + 'nexus/claim/history')
+    for (let i in data) {
+      switch (data[i].asset_id) {
+        case 31:
+          data[i]['url'] = require('~/assets/currency/play.png')
+          break
+        case 32:
+          data[i]['url'] = require('~/assets/currency/rfuel.png')
+          break
+        case 33:
+          data[i]['url'] = require('~/assets/currency/usdt.png')
+          break
+      }
+    }
     this.datas = data
-    console.log(this.datas)
     this.loading = true
   },
+  // async mounted() {
+  //   const { data } = await post(URL + 'nexus/claim/history')
+  //   this.datas = data
+  //   console.log(this.datas)
+  //   this.loading = true
+  // },
 }
 </script>
 <style scoped lang="less">

@@ -44,11 +44,12 @@ export function post(
       .then((res) => {
         if (res.data.code == 1001) {
           localStorage.removeItem('access_token')
+          window.location.replace("/")
         }
         if (res.data.code) {
           message.warning(res.data.message)
         }
-        resolve(res.data)
+        resolve(res.data || {})
       })
       .catch((err) => {
         reject(err)

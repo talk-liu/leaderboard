@@ -28,10 +28,10 @@
           <img class="logo"
                style="width: 300px;margin: 40px 0px;"
                src="~/assets/logo/1.png" />
-          <h3>FLAPPYBIRD</h3>
+          <h3>LITTLE BIRD</h3>
           <div>
             <p>
-              Flappy Bird is an arcade-style game in which the player controls the bird Faby, which moves persistently to the right. The player is tasked with navigating Faby through pairs of pipes
+              Little bird is an arcade-style game in which the player controls the bird Faby, which moves persistently to the right. The player is tasked with navigating Faby through pairs of pipes
               that
               have equally sized gaps placed at random heights. </p>
             <!-- <p>

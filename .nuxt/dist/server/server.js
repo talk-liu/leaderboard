@@ -43,7 +43,7 @@ module.exports =
 /******/
 /******/ 		// "0" is the signal for "already loaded"
 /******/ 		if(installedChunks[chunkId] !== 0) {
-/******/ 			var chunk = require("./" + ({"1":"components/claims","2":"components/games","3":"components/heads","4":"components/leaderboard","5":"components/popup-confirmation","6":"components/popup-currency","7":"components/popup-notification","8":"components/popup-play","9":"components/popup-singin","10":"components/popup-transaction","11":"components/setuser","12":"components/switchs","13":"pages/flappybirds","14":"pages/index","15":"pages/modify","16":"pages/towerdefenses","17":"pages/transaction/history","18":"pages/transaction/index","19":"pages/user/history","20":"pages/user/index"}[chunkId]||chunkId) + ".js");
+/******/ 			var chunk = require("./" + ({"1":"components/claims","2":"components/games","3":"components/heads","4":"components/leaderboard","5":"components/popup-confirmation","6":"components/popup-currency","7":"components/popup-notification","8":"components/popup-password","9":"components/popup-play","10":"components/popup-singin","11":"components/popup-transaction","12":"components/setuser","13":"components/switchs","14":"pages/flappybirds/howToPlay","15":"pages/flappybirds/index","16":"pages/index","17":"pages/modify","18":"pages/rankingsWork","19":"pages/towerdefenses/howToPlay","20":"pages/towerdefenses/index","21":"pages/transaction/history","22":"pages/transaction/index","23":"pages/user/history","24":"pages/user/index"}[chunkId]||chunkId) + ".js");
 /******/ 			var moreModules = chunk.modules, chunkIds = chunk.ids;
 /******/ 			for(var moduleId in moreModules) {
 /******/ 				modules[moduleId] = moreModules[moduleId];
@@ -553,13 +553,15 @@ const mutations = {
   async INIT_ASSETS(state, value) {
     const {
       data,
-      result
+      result,
+      password
     } = await Object(_utils_axios_js__WEBPACK_IMPORTED_MODULE_0__[/* post */ "a"])(_utils_const_index_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] + 'nexus/assets');
 
     if (!result) {
       return false;
-    } // data.data.balances = data.balances
+    }
 
+    data.data['password'] = !password; // data.data.balances = data.balances
 
     const res = data ? data.balances : [];
 
@@ -689,13 +691,14 @@ function post(url, params = {}, headers = {
     }).then(res => {
       if (res.data.code == 1001) {
         localStorage.removeItem('access_token');
+        window.location.replace("/");
       }
 
       if (res.data.code) {
         ant_design_vue__WEBPACK_IMPORTED_MODULE_2__["message"].warning(res.data.message);
       }
 
-      resolve(res.data);
+      resolve(res.data || {});
     }).catch(err => {
       reject(err);
     });
@@ -1125,6 +1128,7 @@ __webpack_require__.d(components_namespaceObject, "Switchs", function() { return
 __webpack_require__.d(components_namespaceObject, "PopupConfirmation", function() { return PopupConfirmation; });
 __webpack_require__.d(components_namespaceObject, "PopupCurrency", function() { return PopupCurrency; });
 __webpack_require__.d(components_namespaceObject, "PopupNotification", function() { return PopupNotification; });
+__webpack_require__.d(components_namespaceObject, "PopupPassword", function() { return PopupPassword; });
 __webpack_require__.d(components_namespaceObject, "PopupPlay", function() { return PopupPlay; });
 __webpack_require__.d(components_namespaceObject, "PopupSingin", function() { return PopupSingin; });
 __webpack_require__.d(components_namespaceObject, "PopupTransaction", function() { return PopupTransaction; });
@@ -1921,21 +1925,27 @@ function shouldScrollToTop(route) {
 
 
 
-const _eb448922 = () => interopDefault(__webpack_require__.e(/* import() | pages/flappybirds */ 13).then(__webpack_require__.bind(null, 160)));
+const _7cf49a9c = () => interopDefault(__webpack_require__.e(/* import() | pages/flappybirds/index */ 15).then(__webpack_require__.bind(null, 188)));
 
-const _44594bf7 = () => interopDefault(__webpack_require__.e(/* import() | pages/modify */ 15).then(__webpack_require__.bind(null, 164)));
+const _44594bf7 = () => interopDefault(__webpack_require__.e(/* import() | pages/modify */ 17).then(__webpack_require__.bind(null, 189)));
 
-const _7e577b8f = () => interopDefault(__webpack_require__.e(/* import() | pages/towerdefenses */ 16).then(__webpack_require__.bind(null, 165)));
+const _e2e44daa = () => interopDefault(__webpack_require__.e(/* import() | pages/rankingsWork */ 18).then(__webpack_require__.bind(null, 190)));
 
-const _3acda5b4 = () => interopDefault(__webpack_require__.e(/* import() | pages/transaction/index */ 18).then(__webpack_require__.bind(null, 166)));
+const _5ff6dad2 = () => interopDefault(__webpack_require__.e(/* import() | pages/towerdefenses/index */ 20).then(__webpack_require__.bind(null, 191)));
 
-const _10ec844b = () => interopDefault(__webpack_require__.e(/* import() | pages/user/index */ 20).then(__webpack_require__.bind(null, 167)));
+const _3acda5b4 = () => interopDefault(__webpack_require__.e(/* import() | pages/transaction/index */ 22).then(__webpack_require__.bind(null, 192)));
 
-const _7c51f414 = () => interopDefault(__webpack_require__.e(/* import() | pages/transaction/history */ 17).then(__webpack_require__.bind(null, 163)));
+const _10ec844b = () => interopDefault(__webpack_require__.e(/* import() | pages/user/index */ 24).then(__webpack_require__.bind(null, 193)));
 
-const _e88eca66 = () => interopDefault(__webpack_require__.e(/* import() | pages/user/history */ 19).then(__webpack_require__.bind(null, 162)));
+const _c3fc77c2 = () => interopDefault(__webpack_require__.e(/* import() | pages/flappybirds/howToPlay */ 14).then(__webpack_require__.bind(null, 194)));
 
-const _097c4c25 = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 14).then(__webpack_require__.bind(null, 161)));
+const _5d3c4782 = () => interopDefault(__webpack_require__.e(/* import() | pages/towerdefenses/howToPlay */ 19).then(__webpack_require__.bind(null, 195)));
+
+const _7c51f414 = () => interopDefault(__webpack_require__.e(/* import() | pages/transaction/history */ 21).then(__webpack_require__.bind(null, 196)));
+
+const _e88eca66 = () => interopDefault(__webpack_require__.e(/* import() | pages/user/history */ 23).then(__webpack_require__.bind(null, 197)));
+
+const _097c4c25 = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 16).then(__webpack_require__.bind(null, 198)));
 
 const emptyFn = () => {};
 
@@ -1948,15 +1958,19 @@ const routerOptions = {
   scrollBehavior: router_scrollBehavior,
   routes: [{
     path: "/flappybirds",
-    component: _eb448922,
+    component: _7cf49a9c,
     name: "flappybirds"
   }, {
     path: "/modify",
     component: _44594bf7,
     name: "modify"
   }, {
+    path: "/rankingsWork",
+    component: _e2e44daa,
+    name: "rankingsWork"
+  }, {
     path: "/towerdefenses",
-    component: _7e577b8f,
+    component: _5ff6dad2,
     name: "towerdefenses"
   }, {
     path: "/transaction",
@@ -1966,6 +1980,14 @@ const routerOptions = {
     path: "/user",
     component: _10ec844b,
     name: "user"
+  }, {
+    path: "/flappybirds/howToPlay",
+    component: _c3fc77c2,
+    name: "flappybirds-howToPlay"
+  }, {
+    path: "/towerdefenses/howToPlay",
+    component: _5d3c4782,
+    name: "towerdefenses-howToPlay"
   }, {
     path: "/transaction/history",
     component: _7c51f414,
@@ -2851,19 +2873,20 @@ function mergeProperty(storeModule, moduleData, property) {
   }
 }
 // CONCATENATED MODULE: ./.nuxt/components/index.js
-const Claims = () => __webpack_require__.e(/* import() | components/claims */ 1).then(__webpack_require__.bind(null, 147)).then(c => wrapFunctional(c.default || c));
-const Games = () => __webpack_require__.e(/* import() | components/games */ 2).then(__webpack_require__.bind(null, 144)).then(c => wrapFunctional(c.default || c));
-const Heads = () => __webpack_require__.e(/* import() | components/heads */ 3).then(__webpack_require__.bind(null, 70)).then(c => wrapFunctional(c.default || c));
-const Leaderboard = () => __webpack_require__.e(/* import() | components/leaderboard */ 4).then(__webpack_require__.bind(null, 143)).then(c => wrapFunctional(c.default || c));
+const Claims = () => __webpack_require__.e(/* import() | components/claims */ 1).then(__webpack_require__.bind(null, 157)).then(c => wrapFunctional(c.default || c));
+const Games = () => __webpack_require__.e(/* import() | components/games */ 2).then(__webpack_require__.bind(null, 153)).then(c => wrapFunctional(c.default || c));
+const Heads = () => __webpack_require__.e(/* import() | components/heads */ 3).then(__webpack_require__.bind(null, 62)).then(c => wrapFunctional(c.default || c));
+const Leaderboard = () => __webpack_require__.e(/* import() | components/leaderboard */ 4).then(__webpack_require__.bind(null, 152)).then(c => wrapFunctional(c.default || c));
 const Loading = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 43)).then(c => wrapFunctional(c.default || c));
-const Setuser = () => __webpack_require__.e(/* import() | components/setuser */ 11).then(__webpack_require__.bind(null, 146)).then(c => wrapFunctional(c.default || c));
-const Switchs = () => __webpack_require__.e(/* import() | components/switchs */ 12).then(__webpack_require__.bind(null, 77)).then(c => wrapFunctional(c.default || c));
-const PopupConfirmation = () => __webpack_require__.e(/* import() | components/popup-confirmation */ 5).then(__webpack_require__.bind(null, 62)).then(c => wrapFunctional(c.default || c));
-const PopupCurrency = () => __webpack_require__.e(/* import() | components/popup-currency */ 6).then(__webpack_require__.bind(null, 76)).then(c => wrapFunctional(c.default || c));
-const PopupNotification = () => __webpack_require__.e(/* import() | components/popup-notification */ 7).then(__webpack_require__.bind(null, 113)).then(c => wrapFunctional(c.default || c));
-const PopupPlay = () => __webpack_require__.e(/* import() | components/popup-play */ 8).then(__webpack_require__.bind(null, 92)).then(c => wrapFunctional(c.default || c));
-const PopupSingin = () => __webpack_require__.e(/* import() | components/popup-singin */ 9).then(__webpack_require__.bind(null, 63)).then(c => wrapFunctional(c.default || c));
-const PopupTransaction = () => __webpack_require__.e(/* import() | components/popup-transaction */ 10).then(__webpack_require__.bind(null, 145)).then(c => wrapFunctional(c.default || c)); // nuxt/nuxt.js#8607
+const Setuser = () => __webpack_require__.e(/* import() | components/setuser */ 12).then(__webpack_require__.bind(null, 154)).then(c => wrapFunctional(c.default || c));
+const Switchs = () => __webpack_require__.e(/* import() | components/switchs */ 13).then(__webpack_require__.bind(null, 79)).then(c => wrapFunctional(c.default || c));
+const PopupConfirmation = () => __webpack_require__.e(/* import() | components/popup-confirmation */ 5).then(__webpack_require__.bind(null, 63)).then(c => wrapFunctional(c.default || c));
+const PopupCurrency = () => __webpack_require__.e(/* import() | components/popup-currency */ 6).then(__webpack_require__.bind(null, 77)).then(c => wrapFunctional(c.default || c));
+const PopupNotification = () => __webpack_require__.e(/* import() | components/popup-notification */ 7).then(__webpack_require__.bind(null, 117)).then(c => wrapFunctional(c.default || c));
+const PopupPassword = () => __webpack_require__.e(/* import() | components/popup-password */ 8).then(__webpack_require__.bind(null, 156)).then(c => wrapFunctional(c.default || c));
+const PopupPlay = () => __webpack_require__.e(/* import() | components/popup-play */ 9).then(__webpack_require__.bind(null, 96)).then(c => wrapFunctional(c.default || c));
+const PopupSingin = () => __webpack_require__.e(/* import() | components/popup-singin */ 10).then(__webpack_require__.bind(null, 64)).then(c => wrapFunctional(c.default || c));
+const PopupTransaction = () => __webpack_require__.e(/* import() | components/popup-transaction */ 11).then(__webpack_require__.bind(null, 155)).then(c => wrapFunctional(c.default || c)); // nuxt/nuxt.js#8607
 
 function wrapFunctional(options) {
   if (!options || !options.functional) {
@@ -3645,6 +3668,12 @@ var component = Object(componentNormalizer["a" /* default */])(
 /***/ (function(module, exports) {
 
 module.exports = require("web3");
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports) {
+
+module.exports = require("buffer");
 
 /***/ })
 /******/ ]);

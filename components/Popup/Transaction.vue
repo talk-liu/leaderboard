@@ -10,12 +10,25 @@
           <span>
             {{poolData.amount}} {{poolData.tokens}}
           </span>
-          will be sent to
+          will send be sent to
           <br />
           <a>
             {{poolData.to_account | to_account}}...
           </a>
         </p>
+        <ul class="enter">
+          <li>
+            <label>
+              Enter your password
+            </label>
+            <input :type="passwordBoll?'password':'text'" v-model="password"/>
+            <img v-if="passwordBoll" @click="passwordBoll=!passwordBoll" src="~/assets/icon/show.png"/>
+            <img v-else @click="passwordBoll=!passwordBoll" src="~/assets/icon/hidden.png"/>
+            <a @click="forgotEve">
+              Forgot Password？
+            </a>
+          </li>
+        </ul>
         <p class="config">
           <img @click="switchGameBoll=!switchGameBoll"
                src="~/assets/icon/cancel.png" />
@@ -34,6 +47,8 @@ export default {
     return {
       switchGameBoll: false,
       poolData: {},
+      password:'',
+      passwordBoll: true
     }
   },
   computed: {
@@ -57,8 +72,13 @@ export default {
     },
     tokensEve() {
       this.switchGameBoll = false
-      this.$emit('transferEve')
+      this.$emit('transferEve',this.password)
+      this.password = ''
     },
+    forgotEve(){
+      this.switchGameBoll = false
+      this.$emit('forgotRefEve')
+    }
   },
 }
 </script>
@@ -82,10 +102,10 @@ export default {
     z-index: 12;
     background: url('~/assets/propr.png') no-repeat;
     background-size: 100% 100%;
-    width: 462px;
+    width: 562px;
     padding-bottom: 30px;
     h4 {
-      margin-top: 16px;
+      margin-top: 32px;
       padding: 0px 60px;
       font-size: 20px;
       text-align: center;
@@ -119,6 +139,41 @@ export default {
           cursor: pointer;
         }
       }
+    }
+  }
+  .enter{
+    padding: 0px 35px;
+    margin-top: 14px;
+    li{
+      position: relative;
+      img{
+        position: absolute;
+        right: 11px;
+        top: 44px
+      }
+    }
+    label{
+      font-size: 20px;
+      line-height: 22px;
+
+    }
+    input{
+      width: 100%;
+      height: 43px;
+      line-height: 43px;
+      background: #40dd84;
+      box-shadow: inset 0px 4px 6px #017e37;
+      outline: none;
+      border: none;
+      border-radius: 11px;
+      font-size: 18px;
+      text-indent: 10px;
+      color: #000;
+      margin: 10px 0px;
+    }
+    a{
+      color: #40DD84;
+      font-size: 16px;
     }
   }
 }

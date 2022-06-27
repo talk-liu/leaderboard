@@ -2,9 +2,9 @@
   {
     "name": "flappybirds",
     "path": "/flappybirds",
-    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/flappybirds.vue",
-    "chunkName": "pages/flappybirds",
-    "_name": "_eb448922"
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/flappybirds/index.vue",
+    "chunkName": "pages/flappybirds/index",
+    "_name": "_7cf49a9c"
   },
   {
     "name": "modify",
@@ -14,11 +14,18 @@
     "_name": "_44594bf7"
   },
   {
+    "name": "rankingsWork",
+    "path": "/rankingsWork",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/rankingsWork.vue",
+    "chunkName": "pages/rankingsWork",
+    "_name": "_e2e44daa"
+  },
+  {
     "name": "towerdefenses",
     "path": "/towerdefenses",
-    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/towerdefenses.vue",
-    "chunkName": "pages/towerdefenses",
-    "_name": "_7e577b8f"
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/towerdefenses/index.vue",
+    "chunkName": "pages/towerdefenses/index",
+    "_name": "_5ff6dad2"
   },
   {
     "name": "transaction",
@@ -33,6 +40,20 @@
     "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/user/index.vue",
     "chunkName": "pages/user/index",
     "_name": "_10ec844b"
+  },
+  {
+    "name": "flappybirds-howToPlay",
+    "path": "/flappybirds/howToPlay",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/flappybirds/howToPlay.vue",
+    "chunkName": "pages/flappybirds/howToPlay",
+    "_name": "_c3fc77c2"
+  },
+  {
+    "name": "towerdefenses-howToPlay",
+    "path": "/towerdefenses/howToPlay",
+    "component": "/Users/talk/Desktop/document/RioDefi/rio/leaderboard/pages/towerdefenses/howToPlay.vue",
+    "chunkName": "pages/towerdefenses/howToPlay",
+    "_name": "_5d3c4782"
   },
   {
     "name": "transaction-history",

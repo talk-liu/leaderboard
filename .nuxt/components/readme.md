@@ -16,6 +16,7 @@ You can directly use them in pages and other components without the need to impo
 - `<PopupConfirmation>` | `<popup-confirmation>` (components/Popup/Confirmation.vue)
 - `<PopupCurrency>` | `<popup-currency>` (components/Popup/Currency.vue)
 - `<PopupNotification>` | `<popup-notification>` (components/Popup/Notification.vue)
+- `<PopupPassword>` | `<popup-password>` (components/Popup/Password.vue)
 - `<PopupPlay>` | `<popup-play>` (components/Popup/Play.vue)
 - `<PopupSingin>` | `<popup-singin>` (components/Popup/Singin.vue)
 - `<PopupTransaction>` | `<popup-transaction>` (components/Popup/Transaction.vue)

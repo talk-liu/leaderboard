@@ -8,6 +8,7 @@ export const Switchs = () => import('../../components/Switchs.vue' /* webpackChu
 export const PopupConfirmation = () => import('../../components/Popup/Confirmation.vue' /* webpackChunkName: "components/popup-confirmation" */).then(c => wrapFunctional(c.default || c))
 export const PopupCurrency = () => import('../../components/Popup/Currency.vue' /* webpackChunkName: "components/popup-currency" */).then(c => wrapFunctional(c.default || c))
 export const PopupNotification = () => import('../../components/Popup/Notification.vue' /* webpackChunkName: "components/popup-notification" */).then(c => wrapFunctional(c.default || c))
+export const PopupPassword = () => import('../../components/Popup/Password.vue' /* webpackChunkName: "components/popup-password" */).then(c => wrapFunctional(c.default || c))
 export const PopupPlay = () => import('../../components/Popup/Play.vue' /* webpackChunkName: "components/popup-play" */).then(c => wrapFunctional(c.default || c))
 export const PopupSingin = () => import('../../components/Popup/Singin.vue' /* webpackChunkName: "components/popup-singin" */).then(c => wrapFunctional(c.default || c))
 export const PopupTransaction = () => import('../../components/Popup/Transaction.vue' /* webpackChunkName: "components/popup-transaction" */).then(c => wrapFunctional(c.default || c))

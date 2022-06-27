@@ -29,17 +29,19 @@
                    src="~assets/button111.png" />
             </p>
             <p>
-              <img @click="boll=!boll"
-                   src="~assets/gameButton1.png" />
+              <nuxt-link to="/flappybirds/howToPlay">
+                <img src="~assets/gameButton1.png" />
+              </nuxt-link>
             </p>
             <p>
-              <img @click="boll=!boll"
-                   src="~assets/gameButton2.png" />
+              <nuxt-link to="/rankingsWork?name=flappybirds">
+                <img src="~assets/gameButton2.png" />
+              </nuxt-link>
             </p>
-            <p>
+            <!-- <p>
               <img @click="boll=!boll"
                    src="~assets/gameButton3.png" />
-            </p>
+            </p> -->
           </div>
 
         </div>

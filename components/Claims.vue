@@ -10,7 +10,8 @@
         </p>
         <p>
           {{address}}
-          <img @click="copy" src="~/assets/icon/cup.png" />
+          <img @click="copy"
+               src="~/assets/icon/cup.png" />
         </p>
       </div>
       <div class="assets">
@@ -61,7 +62,7 @@
           <li v-for="(res,keys) in item.rewards"
               :key="keys"
               v-show="res.reward > 0 ">
-            <div v-show="boll"
+            <div v-if="boll"
                  class="popup"></div>
             <img v-show="item.game_id == 1"
                  src="~/assets/logo/2.png" />
@@ -146,13 +147,15 @@ export default {
       'INIT_ASSETS',
     ]),
     async claimsEve(game_id, round) {
+      if(this.boll){
+        return false
+      }
       this.boll = true
       const { message } = await post(URL + 'nexus/claim', {
         game_id: game_id,
         asset_id: this.tokens.assetId,
         round: parseInt(round),
       })
-      this.boll = false
       this.$message.info('success')
       this.INIT_ASSETS()
     },
@@ -175,19 +178,19 @@ export default {
       const { data } = await post(URL + 'nexus/reward', params)
       this.gameList = data
       this.loading = true
+      this.boll = false
     },
-    copy(){
-      var domUrl = document.createElement("input");
-      domUrl.value = this.address;
-      domUrl.id = "creatDom";
-      document.body.appendChild(domUrl);
-      domUrl.select(); // 选择对象
-      document.execCommand("Copy"); // 执行浏览器复制命令
-      let creatDom = document.getElementById("creatDom");
-      creatDom.parentNode.removeChild(creatDom);
+    copy() {
+      var domUrl = document.createElement('input')
+      domUrl.value = this.address
+      domUrl.id = 'creatDom'
+      document.body.appendChild(domUrl)
+      domUrl.select() // 选择对象
+      document.execCommand('Copy') // 执行浏览器复制命令
+      let creatDom = document.getElementById('creatDom')
+      creatDom.parentNode.removeChild(creatDom)
       this.$message.info('Copy successful')
-
-    }
+    },
   },
 }
 </script>

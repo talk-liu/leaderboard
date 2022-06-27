@@ -5,8 +5,9 @@
       <h3>Transaction</h3>
       <Currency @tokensMethod="tokensMethod"
                 ref="currencyFunction" />
-      <Transaction @transferEve="transferEve"
+      <Transaction @transferEve="transferEve" @forgotRefEve="forgotRefEve"
                    ref="transactionFunction" />
+      <Password ref="passwordFunction" />
       <ul>
         <li>
           <label>Assets</label>
@@ -33,7 +34,7 @@
         <li>
           <label>Amount</label>
           <div class="send">
-            <input v-model="amount" />
+            <input oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g,'$1')" v-model="amount" />
           </div>
         </li>
         <li class="history">
@@ -55,6 +56,7 @@ import { get, post } from '~/utils/axios.js'
 import URL from '~/utils/const/index.js'
 import Currency from '~/components/Popup/Currency.vue'
 import Transaction from '~/components/Popup/Transaction.vue'
+import Password from '~/components/Popup/Password.vue'
 
 export default {
   name: 'TransactionPage',
@@ -63,27 +65,33 @@ export default {
   },
   computed: {
     ...mapState({
-      tokens: (state) => state.tokens.tokens,
+      tokens: (state) => state.tokens.tokens
     }),
   },
-  components: { Currency, Transaction },
+  components: { Currency, Transaction, Password },
   methods: {
     switchEve() {
       this.$refs.currencyFunction.switchCurrencyEve(this.tokens)
     },
-    async transferEve() {
+    async transferEve(password) {
       const res = await post(URL + 'nexus/transfer', {
         to_account: this.to_account,
         asset_id: this.tokens.assetId,
         amount: parseFloat(this.amount),
         remark: '测试',
+        password: password
       })
-      if (res.data.data == null) {
-        this.$message.info(res.data.errorMsg)
+      this.to_account = ''
+      this.amount =  ''
+      if (res && res.data.data == null) {
+        this.$message.error(res.data.errorMsg)
       } else {
         console.log(res.data, 'transaction_id')
         this.$message.info(res.message)
       }
+    },
+    forgotRefEve(){
+        this.$refs.passwordFunction.bollEve()
     },
     async confirmEve() {
       console.log(this.to_account, this.amount)

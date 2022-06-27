@@ -4,11 +4,14 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _eb448922 = () => interopDefault(import('../pages/flappybirds.vue' /* webpackChunkName: "pages/flappybirds" */))
+const _7cf49a9c = () => interopDefault(import('../pages/flappybirds/index.vue' /* webpackChunkName: "pages/flappybirds/index" */))
 const _44594bf7 = () => interopDefault(import('../pages/modify.vue' /* webpackChunkName: "pages/modify" */))
-const _7e577b8f = () => interopDefault(import('../pages/towerdefenses.vue' /* webpackChunkName: "pages/towerdefenses" */))
+const _e2e44daa = () => interopDefault(import('../pages/rankingsWork.vue' /* webpackChunkName: "pages/rankingsWork" */))
+const _5ff6dad2 = () => interopDefault(import('../pages/towerdefenses/index.vue' /* webpackChunkName: "pages/towerdefenses/index" */))
 const _3acda5b4 = () => interopDefault(import('../pages/transaction/index.vue' /* webpackChunkName: "pages/transaction/index" */))
 const _10ec844b = () => interopDefault(import('../pages/user/index.vue' /* webpackChunkName: "pages/user/index" */))
+const _c3fc77c2 = () => interopDefault(import('../pages/flappybirds/howToPlay.vue' /* webpackChunkName: "pages/flappybirds/howToPlay" */))
+const _5d3c4782 = () => interopDefault(import('../pages/towerdefenses/howToPlay.vue' /* webpackChunkName: "pages/towerdefenses/howToPlay" */))
 const _7c51f414 = () => interopDefault(import('../pages/transaction/history.vue' /* webpackChunkName: "pages/transaction/history" */))
 const _e88eca66 = () => interopDefault(import('../pages/user/history.vue' /* webpackChunkName: "pages/user/history" */))
 const _097c4c25 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
@@ -26,15 +29,19 @@ export const routerOptions = {
 
   routes: [{
     path: "/flappybirds",
-    component: _eb448922,
+    component: _7cf49a9c,
     name: "flappybirds"
   }, {
     path: "/modify",
     component: _44594bf7,
     name: "modify"
   }, {
+    path: "/rankingsWork",
+    component: _e2e44daa,
+    name: "rankingsWork"
+  }, {
     path: "/towerdefenses",
-    component: _7e577b8f,
+    component: _5ff6dad2,
     name: "towerdefenses"
   }, {
     path: "/transaction",
@@ -44,6 +51,14 @@ export const routerOptions = {
     path: "/user",
     component: _10ec844b,
     name: "user"
+  }, {
+    path: "/flappybirds/howToPlay",
+    component: _c3fc77c2,
+    name: "flappybirds-howToPlay"
+  }, {
+    path: "/towerdefenses/howToPlay",
+    component: _5d3c4782,
+    name: "towerdefenses-howToPlay"
   }, {
     path: "/transaction/history",
     component: _7c51f414,
