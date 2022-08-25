@@ -4,14 +4,12 @@
     <div class="container">
       <div class="information">
         <p>
-          <label>User: {{userInfo.accountName | accountName}}</label>
-          <img @click="singupEve"
-               src="~/assets/icon/singup.png" />
+          <label>User: {{ userInfo.accountName | accountName }}</label>
+          <img @click="singupEve" src="~/assets/icon/singup.png" />
         </p>
         <p>
-          {{address}}
-          <img @click="copy"
-               src="~/assets/icon/cup.png" />
+          {{ address }}
+          <img @click="copy" src="~/assets/icon/cup.png" />
         </p>
       </div>
       <div class="assets">
@@ -26,14 +24,9 @@
         </div>
         <div class="currencys">
           <div>
-            <p v-for="(item,key) in balances"
-               :key="key"
-               v-show="item.name">
-              <img width="24px"
-                   :src="item.img" />
-              <label>
-                {{item.balance}} {{item.name}}
-              </label>
+            <p v-for="(item, key) in balances" :key="key" v-show="item.name">
+              <img width="24px" :src="item.img" />
+              <label> {{ item.balance }} {{ item.name }} </label>
             </p>
           </div>
         </div>
@@ -57,32 +50,31 @@
         </h3>
       </div>
       <div v-if="loading">
-        <ul v-for="(item,key) in gameList"
-            :key="key">
-          <li v-for="(res,keys) in item.rewards"
-              :key="keys"
-              v-show="res.reward > 0 ">
-            <div v-if="boll"
-                 class="popup"></div>
-            <img v-show="item.game_id == 1"
-                 src="~/assets/logo/2.png" />
-            <img v-show="item.game_id == 2"
-                 src="~/assets/logo/1.png" />
+        <ul v-for="(item, key) in gameList" :key="key">
+          <li
+            v-for="(res, keys) in item.rewards"
+            :key="keys"
+            v-show="res.reward > 0"
+          >
+            <div v-if="boll" class="popup"></div>
+            <img v-show="item.game_id == 1" src="~/assets/logo/2.png" />
+            <img v-show="item.game_id == 2" src="~/assets/logo/1.png" />
             <div>
               <h3>Game Tokens</h3>
               <p>
-                Claim Rewards<span>{{res.reward}} {{tokens.name}}</span>
+                Claim Rewards<span>{{ res.reward }} {{ tokens.name }}</span>
               </p>
-              <a @click="claimsEve(item.game_id,res.round)"
-                 href="javascript:;">
+              <a
+                @click="claimsEve(item.game_id, res.round)"
+                href="javascript:;"
+              >
                 <img src="~/assets/claims/button.png" />
               </a>
             </div>
           </li>
         </ul>
       </div>
-      <p v-else
-         style="text-align: center;margin: 20px 0px;color: #999">
+      <p v-else style="text-align: center; margin: 20px 0px; color: #999">
         <a-spin />
         <br />
         Getting data on the chain ...
@@ -95,18 +87,17 @@
       </p> -->
     </div>
     <Currency ref="currencyFunction" />
-    <Notification @tokensMethod="tokensMethod"
-                  ref="notificationFn" />
+    <Notification @tokensMethod="tokensMethod" ref="notificationFn" />
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import Web3 from 'web3'
-import { get, post } from '~/utils/axios.js'
-import URL from '~/utils/const/index.js'
-import Currency from '~/components/Popup/Currency.vue'
-import Notification from '~/components/Popup/Notification.vue'
+import { mapState, mapMutations } from "vuex";
+import Web3 from "web3";
+import { get, post } from "~/utils/axios.js";
+import URL from "~/utils/const/index.js";
+import Currency from "~/components/Popup/Currency.vue";
+import Notification from "~/components/Popup/Notification.vue";
 // import TOKENS from '~/utils/const/tokens.js'
 export default {
   data() {
@@ -115,12 +106,12 @@ export default {
       assetsData: {},
       gameList: [],
       loading: false,
-      address: '',
-    }
+      address: "",
+    };
   },
   filters: {
     accountName(value) {
-      return value ? value.substring(0, value.length - 4) : value
+      return value ? value.substring(0, value.length - 4) : value;
     },
   },
   components: { Currency, Notification },
@@ -133,66 +124,66 @@ export default {
   },
   watch: {
     tokens(val) {
-      this.rewardEve({ asset_id: val.assetId })
+      this.rewardEve({ asset_id: val.assetId });
     },
   },
   async mounted() {
-    this.address = localStorage.getItem('address')
+    this.address = localStorage.getItem("address");
   },
   methods: {
-    ...mapMutations('todos', ['SET_USERINFO']),
-    ...mapMutations('tokens', [
-      'SET_TOKENS',
-      'INIT_ASSETS_REMOVE',
-      'INIT_ASSETS',
+    ...mapMutations("todos", ["SET_USERINFO"]),
+    ...mapMutations("tokens", [
+      "SET_TOKENS",
+      "INIT_ASSETS_REMOVE",
+      "INIT_ASSETS",
     ]),
     async claimsEve(game_id, round) {
-      if(this.boll){
-        return false
+      if (this.boll) {
+        return false;
       }
-      this.boll = true
-      const { message } = await post(URL + 'nexus/claim', {
+      this.boll = true;
+      const { message } = await post(URL + "nexus/claim", {
         game_id: game_id,
         asset_id: this.tokens.assetId,
         round: parseInt(round),
-      })
-      this.$message.info('success')
-      this.INIT_ASSETS()
+      });
+      this.$message.info("success");
+      this.INIT_ASSETS();
     },
     singupEve() {
-      this.$refs.notificationFn.switchCurrencyEve(this.tokens)
+      this.$refs.notificationFn.switchCurrencyEve(this.tokens);
     },
     tokensMethod(item) {
-      localStorage.removeItem('access_token')
-      this.INIT_ASSETS_REMOVE({})
-      const _this = this
+      localStorage.removeItem("access_token");
+      this.INIT_ASSETS_REMOVE({});
+      const _this = this;
       setTimeout(() => {
-        _this.$router.push({ path: '/' })
-      }, 500)
+        _this.$router.push({ path: "/" });
+      }, 500);
     },
     switchEve() {
-      this.$refs.currencyFunction.switchCurrencyEve(this.tokens)
+      this.$refs.currencyFunction.switchCurrencyEve(this.tokens);
     },
     async rewardEve(params) {
-      this.loading = false
-      const { data } = await post(URL + 'nexus/reward', params)
-      this.gameList = data
-      this.loading = true
-      this.boll = false
+      this.loading = false;
+      const { data } = await post(URL + "nexus/reward", params);
+      this.gameList = data;
+      this.loading = true;
+      this.boll = false;
     },
     copy() {
-      var domUrl = document.createElement('input')
-      domUrl.value = this.address
-      domUrl.id = 'creatDom'
-      document.body.appendChild(domUrl)
-      domUrl.select() // 选择对象
-      document.execCommand('Copy') // 执行浏览器复制命令
-      let creatDom = document.getElementById('creatDom')
-      creatDom.parentNode.removeChild(creatDom)
-      this.$message.info('Copy successful')
+      var domUrl = document.createElement("input");
+      domUrl.value = this.address;
+      domUrl.id = "creatDom";
+      document.body.appendChild(domUrl);
+      domUrl.select(); // 选择对象
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      let creatDom = document.getElementById("creatDom");
+      creatDom.parentNode.removeChild(creatDom);
+      this.$message.info("Copy successful");
     },
   },
-}
+};
 </script>
 <style scoped lang="less">
 .claims {
@@ -232,7 +223,7 @@ export default {
     }
   }
   .assets {
-    background: url('~/assets/assetsBack.png') no-repeat;
+    background: url("~/assets/assetsBack.png") no-repeat;
     background-size: 100% 100%;
     width: 722px;
     margin: auto;
@@ -325,7 +316,7 @@ export default {
     grid-gap: 20px;
     grid-template-columns: repeat(2, 1fr);
     li {
-      background: url('~/assets/claims/back.png') no-repeat;
+      background: url("~/assets/claims/back.png") no-repeat;
       background-size: 100% 100%;
       display: flex;
       justify-content: space-around;

@@ -1,25 +1,26 @@
 <template>
-  <div class="switchGame"
-       v-if="switchGameBoll">
+  <div class="switchGame" v-if="switchGameBoll">
     <div class="switchGameBox">
       <h4>
         Switch Tokens
-        <img @click="switchCurrencyEve"
-             src="~assets/close.png" />
+        <img @click="switchCurrencyEve" src="~assets/close.png" />
       </h4>
       <div>
         <ul>
-          <li v-for="(item,key) in balances"
-              :key="key"
-              @click="tokensEve(item)"
-              v-show="item.name">
+          <li
+            v-for="(item, key) in balances"
+            :key="key"
+            @click="tokensEve(item)"
+            v-show="item.name"
+          >
             <p class="list">
-              <img width="44px"
-                   :src="item.img" />
+              <img width="44px" :src="item.img" />
               <span>
-                {{item.name}}
-                <img v-if="poolData.name===item.name"
-                     src="~/assets/icon/yes.png" />
+                {{ item.name }}
+                <img
+                  v-if="poolData.name === item.name"
+                  src="~/assets/icon/yes.png"
+                />
               </span>
             </p>
             <p class="border"></p>
@@ -31,15 +32,15 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import { post } from '~/utils/axios.js'
-import URL from '~/utils/const/index.js'
+import { mapState, mapMutations } from "vuex";
+import { post } from "~/utils/axios.js";
+import URL from "~/utils/const/index.js";
 export default {
   data() {
     return {
       switchGameBoll: false,
       poolData: {},
-    }
+    };
   },
   computed: {
     ...mapState({
@@ -70,19 +71,19 @@ export default {
     // this.SET_TOKENS(res)
   },
   methods: {
-    ...mapMutations('tokens', ['SET_TOKENS', 'INIT_ASSETS', 'INIT_TOKENS']),
+    ...mapMutations("tokens", ["SET_TOKENS", "INIT_ASSETS", "INIT_TOKENS"]),
     switchCurrencyEve(data) {
-      this.poolData = data
-      this.switchGameBoll = !this.switchGameBoll
+      this.poolData = data;
+      this.switchGameBoll = !this.switchGameBoll;
     },
     tokensEve(item) {
-      this.switchGameBoll = false
-      localStorage.setItem('assetId', item.assetId)
-      this.$emit('tokensMethod', item)
-      this.INIT_TOKENS(item)
+      this.switchGameBoll = false;
+      localStorage.setItem("assetId", item.assetId);
+      this.$emit("tokensMethod", item);
+      this.INIT_TOKENS(item);
     },
   },
-}
+};
 </script>
 
 <style scoped lang="less">
@@ -102,7 +103,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 12;
-    background: url('~/assets/propr.png') no-repeat;
+    background: url("~/assets/propr.png") no-repeat;
     background-size: 100% 100%;
     width: 462px;
     padding-bottom: 30px;

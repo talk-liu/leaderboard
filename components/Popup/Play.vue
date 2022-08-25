@@ -1,21 +1,21 @@
 <template>
-  <div class="play"
-       v-if="switchGameBoll">
+  <div class="play" v-if="switchGameBoll">
     <div class="playBox">
       <div>
         <h3>
-          <span>10 {{poolData.name}} TOKEN</span> IS REQUIRED
-          TO PLAY THIS GAME.
+          <span>10 {{ poolData.name }} TOKEN</span> IS REQUIRED TO PLAY THIS
+          GAME.
         </h3>
         <h3>
           Balance:
-          <span>{{poolData.balance}} {{poolData.name}}</span>
+          <span>{{ poolData.balance }} {{ poolData.name }}</span>
         </h3>
         <p>
-          <img @click="switchGameBoll=!switchGameBoll"
-               src="~/assets/claims/cancel.png" />
-          <img @click="childPlayEve"
-               src="~/assets/claims/confirm.png" />
+          <img
+            @click="switchGameBoll = !switchGameBoll"
+            src="~/assets/claims/cancel.png"
+          />
+          <img @click="childPlayEve" src="~/assets/claims/confirm.png" />
         </p>
       </div>
     </div>
@@ -27,23 +27,23 @@ export default {
   data() {
     return {
       switchGameBoll: false,
-    }
+    };
   },
-  props: ['poolData'],
+  props: ["poolData"],
   methods: {
     playBollEve() {
-      this.switchGameBoll = !this.switchGameBoll
+      this.switchGameBoll = !this.switchGameBoll;
     },
     childPlayEve() {
       if (this.poolData.balance < 10) {
-        this.$message.info('Not enough balance')
-        return
+        this.$message.info("Not enough balance");
+        return;
       }
-      this.switchGameBoll = !this.switchGameBoll
-      this.$emit('childPlayMethod')
+      this.switchGameBoll = !this.switchGameBoll;
+      this.$emit("childPlayMethod");
     },
   },
-}
+};
 </script>
 
 <style scoped lang="less">
@@ -63,7 +63,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 12;
-    background: url('~/assets/claims/playBack.png') no-repeat;
+    background: url("~/assets/claims/playBack.png") no-repeat;
     background-size: 100% 100%;
     width: 662px;
     div {

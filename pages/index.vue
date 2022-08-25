@@ -1,39 +1,42 @@
 <template>
   <div>
-
     <Heads />
     <div class="lobby container">
       <ul>
         <li class="lobbyBack1">
-          <img class="logo"
-               src="~/assets/logo/2.png" />
+          <img class="logo" src="~/assets/logo/2.png" />
           <h3>MINION DEFENSE</h3>
           <div>
+            <p>Different hordes of minions are attacking the castle!</p>
             <p>
-              Different hordes of minions are attacking the castle!
-            </p>
-            <p>
-              Join the foray and prevent these vermins from approaching the castle gates, protect the royal treasure at all cost.
+              Join the foray and prevent these vermins from approaching the
+              castle gates, protect the royal treasure at all cost.
             </p>
           </div>
           <!-- <nuxt-link to="/towerdefenses">
             <img class="buttonPlay"
                  src="~/assets/buttonPlay.png" />
           </nuxt-link> -->
-          <img @click="loginIs('towerdefenses')"
-               class="buttonPlay"
-               src="~/assets/buttonPlay.png" />
+          <img
+            @click="loginIs('towerdefenses')"
+            class="buttonPlay"
+            src="~/assets/buttonPlay.png"
+          />
         </li>
         <li>
-          <img class="logo"
-               style="width: 300px;margin: 40px 0px;"
-               src="~/assets/logo/1.png" />
+          <img
+            class="logo"
+            style="width: 300px; margin: 40px 0px"
+            src="~/assets/logo/1.png"
+          />
           <h3>LITTLE BIRD</h3>
           <div>
             <p>
-              Little bird is an arcade-style game in which the player controls the bird Faby, which moves persistently to the right. The player is tasked with navigating Faby through pairs of pipes
-              that
-              have equally sized gaps placed at random heights. </p>
+              Little bird is an arcade-style game in which the player controls
+              the bird Faby, which moves persistently to the right. The player
+              is tasked with navigating Faby through pairs of pipes that have
+              equally sized gaps placed at random heights.
+            </p>
             <!-- <p>
             Join the foray and prevent these vermins from approaching the castle gates, protect the royal treasure at all cost.
           </p> -->
@@ -42,9 +45,11 @@
             <img class="buttonPlay"
                  src="~/assets/buttonPlay.png" />
           </nuxt-link> -->
-          <img @click="loginIs('flappybirds')"
-               class="buttonPlay"
-               src="~/assets/buttonPlay.png" />
+          <img
+            @click="loginIs('flappybirds')"
+            class="buttonPlay"
+            src="~/assets/buttonPlay.png"
+          />
         </li>
       </ul>
     </div>
@@ -52,9 +57,9 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 export default {
-  name: 'IndexPage',
+  name: "IndexPage",
   computed: {
     ...mapState({
       userInfo: (state) => state.tokens,
@@ -62,15 +67,15 @@ export default {
   },
   methods: {
     loginIs(url) {
-      const access_token = localStorage.getItem('access_token')
+      const access_token = localStorage.getItem("access_token");
       if (access_token) {
-        this.$router.push({ name: url })
+        this.$router.push({ name: url });
       } else {
-        this.$message.info('Please login first')
+        this.$message.info("Please login first");
       }
     },
   },
-}
+};
 </script>
 <style scoped lang="less">
 .lobby {
@@ -82,7 +87,7 @@ export default {
     grid-template-rows: repeat(3, 300px);
     margin-top: 33px;
     li {
-      background: url('~/assets/lobbyBack.png') no-repeat;
+      background: url("~/assets/lobbyBack.png") no-repeat;
       background-size: 100% 100%;
       text-align: center;
       padding: 0px 100px;
@@ -108,7 +113,7 @@ export default {
       }
     }
     .lobbyBack1 {
-      background: url('~/assets/lobbyBack1.png') no-repeat;
+      background: url("~/assets/lobbyBack1.png") no-repeat;
     }
   }
 }
